@@ -1,0 +1,849 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="简介：Java 8是在2014年3月发布的，Android工程师为什么要关心Java 8呢？理由是Java 8所做的改变比Java历史上任何一次改变都要深远。Java 8对于程序员的主要好处在于它提供了更多的编程工具和概念，能以更快，更重要的是能以更为简洁、更易于维护的方式解决新的或现有的编程问题。当然了解过Rxjava 响应式编程的同学对链式是不是有很深的印象！！！ Java se 8 api：">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android studio 2.4 支持java 8 特性">
+<meta property="og:url" content="http://yoursite.com/2017/05/05/Android-studio-2-4-支持java-8-特性/index.html">
+<meta property="og:site_name" content="newbie's Home">
+<meta property="og:description" content="简介：Java 8是在2014年3月发布的，Android工程师为什么要关心Java 8呢？理由是Java 8所做的改变比Java历史上任何一次改变都要深远。Java 8对于程序员的主要好处在于它提供了更多的编程工具和概念，能以更快，更重要的是能以更为简洁、更易于维护的方式解决新的或现有的编程问题。当然了解过Rxjava 响应式编程的同学对链式是不是有很深的印象！！！ Java se 8 api：">
+<meta property="og:updated_time" content="2017-05-05T15:40:04.097Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android studio 2.4 支持java 8 特性">
+<meta name="twitter:description" content="简介：Java 8是在2014年3月发布的，Android工程师为什么要关心Java 8呢？理由是Java 8所做的改变比Java历史上任何一次改变都要深远。Java 8对于程序员的主要好处在于它提供了更多的编程工具和概念，能以更快，更重要的是能以更为简洁、更易于维护的方式解决新的或现有的编程问题。当然了解过Rxjava 响应式编程的同学对链式是不是有很深的印象！！！ Java se 8 api：">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/05/Android-studio-2-4-支持java-8-特性/"/>
+
+
+
+
+
+  <title>Android studio 2.4 支持java 8 特性 | newbie's Home</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7918cfc849c65f9bc6545b6b868cb36c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">newbie's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/05/Android-studio-2-4-支持java-8-特性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="newbie-Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="newbie's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android studio 2.4 支持java 8 特性
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-05T23:35:36+08:00">
+                2017-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="简介："><a href="#简介：" class="headerlink" title="简介："></a>简介：</h3><p>Java 8是在2014年3月发布的，Android工程师为什么要关心Java 8呢？理由是Java 8所做的改变比Java历史上任何一次改变都要深远。Java 8对于程序员的主要好处在于它提供了更多的编程工具和概念，能以更快，更重要的是能以更为简洁、更易于维护的方式解决新的或现有的编程问题。当然了解过Rxjava 响应式编程的同学对链式是不是有很深的印象！！！</p>
+<p>Java se 8 api： <a href="http://docs.oracle.com/javase/8/docs/api/" target="_blank" rel="external">http://docs.oracle.com/javase/8/docs/api/</a><br>2.4的下载地址为：<a href="https://developer.android.com/studio/preview/index.html" target="_blank" rel="external">https://developer.android.com/studio/preview/index.html</a></p>
+<p>在AS 2.4中使用Java 8的方法：（需要安装jdk 1.8）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">android &#123;  </div><div class="line">  ...  </div><div class="line">  compileOptions &#123;  </div><div class="line">	sourceCompatibility JavaVersion.VERSION_1_8  </div><div class="line">	targetCompatibility JavaVersion.VERSION_1_8  </div><div class="line">  &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>值得关注新特性：</p>
+<h3 id="一、Lambda表达式"><a href="#一、Lambda表达式" class="headerlink" title="一、Lambda表达式"></a>一、Lambda表达式</h3><p>Lambda表达式可以说是Java 8最大的卖点，她将函数式编程引入了Java。Lambda允许把函数作为一个方法的参数，或者把代码看成数据。<br>一个Lambda表达式可以由用逗号分隔的参数列表、–&gt;符号与函数体三部分表示。例如：<br>Arrays.asList( “p”, “k”, “u”,”f”, “o”, “r”,”k”).forEach( e -&gt; System.out.println( e ) );<br> 1 Arrays.asList( “p”, “k”, “u”,”f”, “o”, “r”,”k”).forEach( e -&gt; System.out.println( e ) );<br>为了使现有函数更好的支持Lambda表达式，Java 8引入了函数式接口的概念。函数式接口就是只有一个方法的普通接口。java.lang.Runnable与java.util.concurrent.Callable是函数式接口最典型的例子。为此，Java 8增加了一种特殊的注解@FunctionalInterface：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@FunctionalInterface</div><div class="line"> public interface Functional &#123;</div><div class="line">     void method();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="二、接口的默认方法与静态方法"><a href="#二、接口的默认方法与静态方法" class="headerlink" title="二、接口的默认方法与静态方法"></a>二、接口的默认方法与静态方法</h3><p>在Java 8之前，接口中的方法是不能带有方法实现对的，这就意味着，一旦当我们的接口发布出去后，就不能轻易更改接口。因为更改接口会导致所有实现了该接口的类都需要更改，这会带来无法估量的问题。Java 8提供了默认方法这一特性，我们可以对方法添加默认的实现，这样一来，实现类就不必实现／覆盖这一方法。我们可以通过前面对苹果排序的代码来加深理解。<br>我们可以在接口中定义默认方法，使用default关键字，并提供默认的实现。所有实现这个接口的类都会接受默认方法的实现，除非子类提供的自己的实现。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface DefaultFunctionInterface &#123;</div><div class="line">    default String defaultFunction() &#123;</div><div class="line">        return &quot;default function&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们还可以在接口中定义静态方法，使用static关键字，也可以提供实现。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface StaticFunctionInterface &#123;</div><div class="line">    static String staticFunction() &#123;</div><div class="line">        return &quot;static function&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接口的默认方法和静态方法的引入，其实可以认为引入了C＋＋中抽象类的理念，以后我们再也不用在每个实现类中都写重复的代码了。</p>
+<h3 id="三、方法引用"><a href="#三、方法引用" class="headerlink" title="三、方法引用"></a>三、方法引用</h3><p>通常与Lambda表达式联合使用，可以直接引用已有Java类或对象的方法。一般有四种不同的方法引用：<br>1.构造器引用。语法是Class::new，或者更一般的Class&lt; T &gt;::new，要求构造器方法是无参数构造；<br>2.静态方法引用。语法是Class::static_method，要求接受一个Class类型的参数；<br>3.特定类的任意对象方法引用。它的语法是Class::method。要求方法是没有参数的；<br>4.特定对象的方法引用，它的语法是instance::method。要求方法接受一个参数，与3不同的地方在于，3是在列表元素上分别调用方法，而4是在某个对象上调用方法，将列表元素作为参数传入；</p>
+<h3 id="四、重复注解"><a href="#四、重复注解" class="headerlink" title="四、重复注解"></a>四、重复注解</h3><p>在Java 5中使用注解有一个限制，即相同的注解在同一位置只能声明一次。Java 8引入重复注解，这样相同的注解在同一地方也可以声明多次。重复注解机制本身需要用@Repeatable注解。Java 8在编译器层做了优化，相同注解会以集合的方式保存，因此底层的原理并没有变化。</p>
+<h3 id="五、扩展注解的支持"><a href="#五、扩展注解的支持" class="headerlink" title="五、扩展注解的支持"></a>五、扩展注解的支持</h3><p>Java 8扩展了注解的上下文，几乎可以为任何东西添加注解，包括局部变量、泛型类、父类与接口的实现，连方法的异常也能添加注解。</p>
+<h3 id="六、Optional"><a href="#六、Optional" class="headerlink" title="六、Optional"></a>六、Optional</h3><p>Java 8引入Optional类来防止空指针异常，Optional类最先是由Google的Guava项目引入的。Optional类实际上是个容器：它可以保存类型T的值，或者保存null。使用Optional类我们就不用显式进行空指针检查了。</p>
+<h3 id="七、Stream"><a href="#七、Stream" class="headerlink" title="七、Stream"></a>七、Stream</h3><p>Stream API是把真正的函数式编程风格引入到Java中。其实简单来说可以把Stream理解为MapReduce（分布式计算系统（一种编程模型）），当然Google的MapReduce的灵感也是来自函数式编程。她其实是一连串支持连续、并行聚集操作的元素。从语法上看，也很像linux的管道、或者链式编程，代码写起来简洁明了，非常顺滑！</p>
+<h4 id="引用："><a href="#引用：" class="headerlink" title="引用："></a>引用：</h4><p>流（Stream）：<br>Stream是Java 8提供的新API，它允许你以声明性方式处理数据集合（通过查询语句来表达，而不是临时编写一个实现）。就现在来看，你可以把把他们看成遍历数据集合的高级迭代器。此外Stream还可以透明地并行处理（parallelStream方法）。<br>Stream API和Java 现有的Collection(集合)API的行为差不多：它们都能够访问数据项目的序列。它们的区别是：Collection主要是为了存储和访问数据，而Stream则主要用于描述对数据的运算。这里的关键点在于，Stream允许并提倡并行处理一个Stream中的元素。 如果需要处理的数据量十分庞大的话，推荐使用并行流来进行处理。<br>流的简短定义是：从支持数据处理操作的源生成的元素序列 。</p>
+<p>元素序列——就像集合一样，流也提供了一个接口，可以访问特定元素类型的一组有序值。因为集合是数据结构，所以它的主要目的是以特定的时间／空间复杂度存储和访问元素。但流的目的在于表达计算，集合讲的是数据，流讲的是计算。<br>源——流会使用一个提供数据的源，如集合、数组、输入流／输出资源。从有序集合生成流时会保留原有的顺序。<br>数据处理操作——流的数据处理功能支持类似于数据库的操纵，以函数式编程语言中的常用操作，如filter、map、reduce、find、match、sort等。流操作可以顺序执行，也可以并行。<br>流水线——很多流操作本身会返回一个流，许多个操作就可以链接起来，形成一个大的流水线。流水线可以看作对数据源进行数据库式查询。<br>内部迭代——与使用显式迭代的集合不同，流的迭代操作是在背后进行的。流只能遍历一次，遍历完之后，这个流就已经被消费掉了。可以从数据源中重新获取一个流。<br>流操作：<br>中间操作：可以连接起来的流操作（返回结果是流）。<br>终端操作：关闭流的操作称为终端操作（其返回结果不是流）。</p>
+<h3 id="八、Date-Time-API-JSR-310"><a href="#八、Date-Time-API-JSR-310" class="headerlink" title="八、Date/Time API (JSR 310)"></a>八、Date/Time API (JSR 310)</h3><p>Java 8新的Date-Time API (JSR 310)受Joda-Time的影响，提供了新的java.time包，可以用来替代 java.util.Date和java.util.Calendar。一般会用到Clock、LocaleDate、LocalTime、LocaleDateTime、ZonedDateTime、Duration这些类，对于时间日期的改进还是非常不错的。</p>
+<h3 id="九、JavaScript引擎Nashorn"><a href="#九、JavaScript引擎Nashorn" class="headerlink" title="九、JavaScript引擎Nashorn"></a>九、JavaScript引擎Nashorn</h3><p>Nashorn允许在JVM上开发运行JavaScript应用，允许Java与JavaScript相互调用。</p>
+<h3 id="十、Base64"><a href="#十、Base64" class="headerlink" title="十、Base64"></a>十、Base64</h3><p>在Java 8中，Base64编码成为了Java类库的标准。Base64类同时还提供了对URL、MIME友好的编码器与解码器<br> 除了这十大新特性之外，还有另外的一些新特性：<br>• 更好的类型推测机制：Java 8在类型推测方面有了很大的提高，这就使代码更整洁，不需要太多的强制类型转换了。<br>• 编译器优化：Java 8将方法的参数名加入了字节码中，这样在运行时通过反射就能获取到参数名，只需要在编译时使用-parameters参数。<br>• 并行（parallel）数组：支持对数组进行并行处理，主要是parallelSort()方法，它可以在多核机器上极大提高数组排序的速度。<br>• 并发（Concurrency）：在新增Stream机制与Lambda的基础之上，加入了一些新方法来支持聚集操作。<br>• Nashorn引擎jjs：基于Nashorn引擎的命令行工具。它接受一些JavaScript源代码为参数，并且执行这些源代码。<br>• 类依赖分析器jdeps：可以显示Java类的包级别或类级别的依赖。<br>• JVM的PermGen空间被移除：取代它的是Metaspace（JEP 122）。<br>直接使用demo中 java lib库查看简单java 8代码，更深入研究推荐下载</p>
+<p>Java8 实战： 下载   <a href="http://pan.baidu.com/s/1o8lZ73W" target="_blank" rel="external">http://pan.baidu.com/s/1o8lZ73W</a><br>Demo 下载地址： <a href="http://pan.baidu.com/s/1jIxCXPO" target="_blank" rel="external">http://pan.baidu.com/s/1jIxCXPO</a></p>
+<hr>
+<blockquote>
+<p>引用：<br>Android开发使用Java8新特性  <a href="http://blog.csdn.net/lpjishu/article/details/53307469" target="_blank" rel="external">http://blog.csdn.net/lpjishu/article/details/53307469</a><br>Java8 十大特性：<a href="http://www.cnblogs.com/pkufork/p/java_8.html" target="_blank" rel="external">http://www.cnblogs.com/pkufork/p/java_8.html</a><br>Java 8新特性终极指南：<a href="http://www.importnew.com/11908.html#parallelArrays" target="_blank" rel="external">http://www.importnew.com/11908.html#parallelArrays</a><br>javaCodeGeeks: <a href="https://www.javacodegeeks.com/2014/05/java-8-features-tutorial.html" target="_blank" rel="external">https://www.javacodegeeks.com/2014/05/java-8-features-tutorial.html</a><br>如何在Android Studio中使用java 8 :<br><a href="https://www.zhihu.com/question/30417745/answer/48010035" target="_blank" rel="external">https://www.zhihu.com/question/30417745/answer/48010035</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>生活不止眼前的苟且，还有诗和远方。</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/weixin.png" alt="newbie-Yang WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/27/Evenbus-3-0-分析/" rel="prev" title="Evenbus 3.0 分析">
+                Evenbus 3.0 分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+	<span class="jiathis_txt">share to</span>
+	<a class="jiathis_button_tools_1"></a>
+	<a class="jiathis_button_tools_2"></a>
+	<a class="jiathis_button_tools_3"></a>
+	<a class="jiathis_button_tools_4"></a>
+	<a href="http://www.jiathis.com/share?uid=2131772" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">more</a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2131772" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+     
+      <div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131772"></script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="newbie-Yang" />
+          <p class="site-author-name" itemprop="name">newbie-Yang</p>
+           
+              <p class="site-description motion-element" itemprop="description">人之初性本善</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yatou252303" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/5288971550" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/o279642707" target="_blank" title="Csdn">
+                  
+                    <i class="fa fa-fw fa-csdn"></i>
+                  
+                  Csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介："><span class="nav-number">1.</span> <span class="nav-text">简介：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一、Lambda表达式"><span class="nav-number">2.</span> <span class="nav-text">一、Lambda表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、接口的默认方法与静态方法"><span class="nav-number">3.</span> <span class="nav-text">二、接口的默认方法与静态方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、方法引用"><span class="nav-number">4.</span> <span class="nav-text">三、方法引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、重复注解"><span class="nav-number">5.</span> <span class="nav-text">四、重复注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、扩展注解的支持"><span class="nav-number">6.</span> <span class="nav-text">五、扩展注解的支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、Optional"><span class="nav-number">7.</span> <span class="nav-text">六、Optional</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、Stream"><span class="nav-number">8.</span> <span class="nav-text">七、Stream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引用："><span class="nav-number">8.1.</span> <span class="nav-text">引用：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#八、Date-Time-API-JSR-310"><span class="nav-number">9.</span> <span class="nav-text">八、Date/Time API (JSR 310)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#九、JavaScript引擎Nashorn"><span class="nav-number">10.</span> <span class="nav-text">九、JavaScript引擎Nashorn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#十、Base64"><span class="nav-number">11.</span> <span class="nav-text">十、Base64</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016- - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">newbie-Yang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131772"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
