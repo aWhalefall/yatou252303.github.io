@@ -1,0 +1,1222 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言本文介绍了如何使用数据绑定库写声明布局和减少绑定应用程序逻辑和布局所需的代码，在官方介绍基础上加上理解整理而成。 准备新建一个 Project，确保 Android 的 Gradle 插件版本不低于 1.5.0-alpha1： classpath ‘com.android.tools.build:gradle:1.5.0’ 然后修改对应模块（Module）的 build.gradle： 123">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Data Binding Library">
+<meta property="og:url" content="http://ppisland.top/2017/04/22/Android Data Binding Library/index.html">
+<meta property="og:site_name" content="newbie's Home">
+<meta property="og:description" content="前言本文介绍了如何使用数据绑定库写声明布局和减少绑定应用程序逻辑和布局所需的代码，在官方介绍基础上加上理解整理而成。 准备新建一个 Project，确保 Android 的 Gradle 插件版本不低于 1.5.0-alpha1： classpath ‘com.android.tools.build:gradle:1.5.0’ 然后修改对应模块（Module）的 build.gradle： 123">
+<meta property="og:image" content="http://img.blog.csdn.net/20170418173007616?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-04-24T13:45:44.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Data Binding Library">
+<meta name="twitter:description" content="前言本文介绍了如何使用数据绑定库写声明布局和减少绑定应用程序逻辑和布局所需的代码，在官方介绍基础上加上理解整理而成。 准备新建一个 Project，确保 Android 的 Gradle 插件版本不低于 1.5.0-alpha1： classpath ‘com.android.tools.build:gradle:1.5.0’ 然后修改对应模块（Module）的 build.gradle： 123">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170418173007616?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '0T2YBYB10G',
+      apiKey: '33c8a1d9c36467051a937fe5eb574fa1',
+      indexName: 'newbie',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ppisland.top/2017/04/22/Android Data Binding Library/"/>
+
+
+
+
+
+  <title>Android Data Binding Library | newbie's Home</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7918cfc849c65f9bc6545b6b868cb36c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">newbie's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ppisland.top/2017/04/22/Android Data Binding Library/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="newbie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="newbie's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android Data Binding Library
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-22T19:53:18+08:00">
+                2017-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/22/Android Data Binding Library/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/04/22/Android Data Binding Library/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/22/Android Data Binding Library/" class="leancloud_visitors" data-flag-title="Android Data Binding Library">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文介绍了如何使用数据绑定库写声明布局和减少绑定应用程序逻辑和布局所需的代码，在官方介绍基础上加上理解整理而成。</p>
+<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>新建一个 Project，确保 Android 的 Gradle 插件版本不低于 1.5.0-alpha1：</p>
+<p>classpath ‘com.android.tools.build:gradle:1.5.0’ 然后修改对应模块（Module）的 build.gradle：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dataBinding &#123;</div><div class="line"></div><div class="line">    enabled true</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>布局文件</p>
+<p>Databinding 布局文件格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</div><div class="line">&lt;data&gt;</div><div class="line">   &lt;variable</div><div class="line">            name=&quot;key&quot;</div><div class="line">            type=&quot;String&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;/data&gt;</div><div class="line">    &lt;!--原先的根节点（Root Element）--&gt;</div><div class="line">    &lt;LinearLayout&gt;</div><div class="line">    ....</div><div class="line">    &lt;/LinearLayout&gt;</div><div class="line">&lt;/layout&gt;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><strong>注意： 一个的Layout中至多能有两个子节点。多于两个子节点会出异常。Key为引用，下面调用方式需要使用key.xxx 进行调用</strong></p>
+<p>数据对象<br>添加一个 POJO 类 - User，非常简单，两个属性以及他们的 getter 和 setter。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">package dragger2.nuoyuan.com.myapplication.bean;</div><div class="line"></div><div class="line">public class Xuser implements Cloneable &#123;</div><div class="line">    private final String firstName;</div><div class="line">    private final String lastName;</div><div class="line"></div><div class="line">    public Xuser(String firstName, String lastName) &#123;</div><div class="line">        this.firstName = firstName;</div><div class="line">        this.lastName = lastName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getFirstName() &#123;</div><div class="line">        return this.firstName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getLastName() &#123;</div><div class="line">        return this.lastName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Xuser clone() throws CloneNotSupportedException &#123;</div><div class="line">        Xuser mail = (Xuser) super.clone();</div><div class="line">        return mail;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>稍后，我们会新建一个 Xuser类型的变量，然后把它跟布局文件中声明的变量进行绑定。</p>
+<p>定义 Variable</p>
+<p>回到布局文件，在 data 节点中声明一个 Xuser 类型的变量 user。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;data&gt;</div><div class="line">	&lt;variable name=&quot;user&quot; type=&quot;dragger2.nuoyuan.com.myapplication.bean.Xuser&quot; /&gt;</div><div class="line">&lt;/data&gt;</div></pre></td></tr></table></figure>
+<p>其中 type 属性就是我们在 Java 文件中定义的 Xuser类。</p>
+<p>当然，data 节点也支持 import，所以上面的代码可以换一种形式来写。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;data&gt;</div><div class="line">    &lt;import type=&quot;dragger2.nuoyuan.com.myapplication.bean.Xuser&quot; /&gt;</div><div class="line">    &lt;variable name=&quot;user&quot; type=&quot;User&quot; /&gt;</div><div class="line">&lt;/data&gt;</div></pre></td></tr></table></figure>
+<p>然后我们刚才在 build.gradle 中添加的那个插件 - com.android.databinding 会根据 xml 文件的名称 Generate 一个继承自 ViewDataBinding 的类。 当然，IDE 中看不到这个文件，需要手动去 build 目录下找。</p>
+<p>例如，这里 xml 的文件名叫 activity_basic.xml，那么生成的类就是 ActivityBasicBinding。</p>
+<p>注意</p>
+<p>java.lang.* 包中的类会被自动导入，可以直接使用，例如要定义一个 String 类型的变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;variable name=&quot;firstName&quot; type=&quot;String&quot; /&gt;</div></pre></td></tr></table></figure>
+<p>绑定 Variable (变量)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">TestdataactivityBinding testdataactivityBinding = DataBindingUtil.setContentView(this, R.layout.testdataactivity);</div><div class="line">Xuser user = new Xuser(&quot;Test&quot;, &quot;User&quot;);</div><div class="line">testdataactivityBinding.setUser(user);</div></pre></td></tr></table></figure>
+<p>除了使用框架自动生成的 TestdataactivityBinding ，我们也可以通过如下方式自定义类名。</p>
+<p>注意<br>TestdataactivityBinding 类是自动生成的，所有的 set 方法也是根据 variable 名称生成的。例如，我们定义了两个变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;data&gt;</div><div class="line">    &lt;variable name=&quot;firstName&quot; type=&quot;String&quot; /&gt;</div><div class="line">    &lt;variable name=&quot;lastName&quot; type=&quot;String&quot; /&gt;</div><div class="line">&lt;/data&gt;</div></pre></td></tr></table></figure>
+<p>那么就会生成对应的两个 set 方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">setFirstName(String firstName);</div><div class="line">setLastName(String lastName);</div></pre></td></tr></table></figure>
+<p>###使用 Variable</p>
+<p>数据与 Variable 绑定之后，xml 的 UI 元素就可以直接使用了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;TextView</div><div class="line">    android:layout_width=&quot;wrap_content&quot;</div><div class="line">    android:layout_height=&quot;wrap_content&quot;</div><div class="line">android:text=&quot;@&#123;user.lastName&#125;&quot; /&gt;</div></pre></td></tr></table></figure>
+<p>至此，一个简单的数据绑定就完成了，可参考完整代码<br>Databinding：<a href="https://github.com/yatou252303/googledatabinding" target="_blank" rel="external">https://github.com/yatou252303/googledatabinding</a></p>
+<h3 id="一些高级用法"><a href="#一些高级用法" class="headerlink" title="一些高级用法"></a>一些高级用法</h3><p>Onclick 设置</p>
+<h3 id="方式1"><a href="#方式1" class="headerlink" title="方式1"></a>方式1</h3><p>Onclick（View view）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 弹出Toash</div><div class="line"> */</div><div class="line">public class MyHandlers &#123;</div><div class="line">    public void onClickFriend(View view) &#123;</div><div class="line">        Toast.makeText(MyApp.context, &quot;dataBinding&quot;, 500).show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</div><div class="line"></div><div class="line">    &lt;data&gt;</div><div class="line">        </div><div class="line"></div><div class="line">        &lt;variable</div><div class="line">            name=&quot;handler&quot;</div><div class="line">            type=&quot;dragger2.nuoyuan.com.myapplication.HandleClickListener.MyHandlers&quot; /&gt;</div><div class="line"></div><div class="line">       </div><div class="line">    &lt;/data&gt;</div><div class="line"></div><div class="line">    &lt;LinearLayout</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;</div><div class="line">        android:orientation=&quot;vertical&quot;&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:layout_width=&quot;wrap_content&quot;</div><div class="line">            android:layout_height=&quot;50dp&quot;</div><div class="line">            android:onClick=&quot;@&#123;handler::onClickFriend&#125;&quot;</div><div class="line">            android:text=&quot;@&#123;user.lastName&#125;&quot; /&gt;</div><div class="line">    &lt;/LinearLayout&gt;</div><div class="line">&lt;/layout&gt;</div></pre></td></tr></table></figure>
+<h3 id="方式2"><a href="#方式2" class="headerlink" title="方式2"></a>方式2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Onclick（Parameter var1，Parameter Var2）</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class Presenter &#123;</div><div class="line">    public void onSaveClick(Xuser task) &#123;</div><div class="line"></div><div class="line">        Toast.makeText(MyApp.context, task.getFirstName(), 500).show();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void onSaveClick(Context context) &#123;</div><div class="line"></div><div class="line">        Toast.makeText(MyApp.context, &quot;dddddd&quot;, 500).show();</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</div><div class="line"></div><div class="line">    &lt;data&gt;</div><div class="line">        &lt;variable</div><div class="line">            name=&quot;click&quot;</div><div class="line">            type=&quot;dragger2.nuoyuan.com.myapplication.HandleClickListener.Presenter&quot; /&gt;</div><div class="line"></div><div class="line"></div><div class="line">        &lt;variable</div><div class="line">            name=&quot;user&quot;</div><div class="line">            type=&quot;dragger2.nuoyuan.com.myapplication.bean.Xuser&quot; /&gt;</div><div class="line">    &lt;/data&gt;</div><div class="line"></div><div class="line">    &lt;LinearLayout</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;</div><div class="line">        android:orientation=&quot;vertical&quot;&gt;</div><div class="line"></div><div class="line">        &lt;Button</div><div class="line">            android:layout_width=&quot;match_parent&quot;</div><div class="line">            android:layout_height=&quot;100dp&quot;</div><div class="line">            android:gravity=&quot;center&quot;</div><div class="line">            android:onClick=&quot;@&#123;(view)-&gt;click.onSaveClick(user) &#125;&quot;</div><div class="line">            android:text=&quot;@&#123;user.firstName&#125;&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:layout_width=&quot;wrap_content&quot;</div><div class="line">            android:layout_height=&quot;50dp&quot;</div><div class="line">            android:text=&quot;@&#123;user.firstName&#125;&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;/LinearLayout&gt;</div><div class="line">&lt;/layout&gt;</div></pre></td></tr></table></figure>
+<h3 id="Include-嵌套Databinging-用法"><a href="#Include-嵌套Databinging-用法" class="headerlink" title="Include 嵌套Databinging 用法"></a>Include 嵌套Databinging 用法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:bind=&quot;http://schemas.android.com/apk/res-auto&quot;&gt;</div><div class="line"></div><div class="line">    &lt;data&gt;</div><div class="line"></div><div class="line">        &lt;import type=&quot;java.util.List&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;variable</div><div class="line">            name=&quot;user&quot;</div><div class="line">            type=&quot;dragger2.nuoyuan.com.myapplication.bean.Xuser&quot; /&gt;</div><div class="line">    &lt;/data&gt;</div><div class="line"></div><div class="line">    &lt;LinearLayout</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;</div><div class="line">        android:orientation=&quot;vertical&quot;&gt;</div><div class="line"></div><div class="line">        &lt;include</div><div class="line">            layout=&quot;@layout/name&quot;</div><div class="line">            bind:user=&quot;@&#123;user&#125;&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;include</div><div class="line">            android:id=&quot;@+id/views&quot;</div><div class="line">            layout=&quot;@layout/contact&quot;</div><div class="line">            bind:user=&quot;@&#123;user&#125;&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;LinearLayout</div><div class="line">            android:layout_width=&quot;match_parent&quot;</div><div class="line">            android:layout_height=&quot;match_parent&quot;</div><div class="line">            android:orientation=&quot;horizontal&quot;&gt;</div><div class="line"></div><div class="line">            &lt;Button</div><div class="line">                android:layout_width=&quot;wrap_content&quot;</div><div class="line">                android:layout_height=&quot;wrap_content&quot;</div><div class="line">                android:onClick=&quot;include&quot;</div><div class="line">                android:text=&quot;@&#123;user.firstName&#125;&quot; /&gt;</div><div class="line">        &lt;/LinearLayout&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;/LinearLayout&gt;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&lt;/layout&gt;</div></pre></td></tr></table></figure>
+<p>在Include的布局文件中必须要有 user</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</div><div class="line"></div><div class="line">    &lt;data&gt;</div><div class="line"></div><div class="line">        &lt;variable</div><div class="line">            name=&quot;user&quot;</div><div class="line">            type=&quot;dragger2.nuoyuan.com.myapplication.bean.Xuser&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;/data&gt;</div><div class="line"></div><div class="line">    &lt;LinearLayout</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;50dp&quot;</div><div class="line">        android:background=&quot;@color/colorAccent&quot;</div><div class="line">        android:orientation=&quot;vertical&quot;&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:layout_width=&quot;wrap_content&quot;</div><div class="line">            android:layout_height=&quot;wrap_content&quot;</div><div class="line">            android:text=&quot;@&#123;user.lastName&#125;&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:id=&quot;@+id/innertext&quot;</div><div class="line">            android:layout_width=&quot;wrap_content&quot;</div><div class="line">            android:layout_height=&quot;wrap_content&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;/LinearLayout&gt;</div><div class="line"></div><div class="line">&lt;/layout&gt;</div></pre></td></tr></table></figure>
+<p>构建过程中编译器会对应Databinding布局文件生成Binding文件<br>而且会对每一个设置Id的组件的生成final Static 成员变量</p>
+<p><img src="http://img.blog.csdn.net/20170418173007616?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>其中view 是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;include</div><div class="line">            android:id=&quot;@+id/views&quot;</div><div class="line">            layout=&quot;@layout/contact&quot;</div><div class="line">            bind:user=&quot;@&#123;user&#125;&quot; /&gt;</div></pre></td></tr></table></figure>
+<p>的id.这样就可以方便的进行调用的，而不是使用findViewByid（）</p>
+<h3 id="DataBinding-支持的操作符号"><a href="#DataBinding-支持的操作符号" class="headerlink" title="DataBinding 支持的操作符号"></a>DataBinding 支持的操作符号</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Mathematical + - / * %</div><div class="line">String concatenation +</div><div class="line">Logical &amp;&amp; ||</div><div class="line">Binary &amp; | ^</div><div class="line">Unary + - ! ~</div><div class="line">Shift &gt;&gt; &gt;&gt;&gt; &lt;&lt;</div><div class="line">Comparison == &gt; &lt; &gt;= &lt;=</div><div class="line">instanceof</div><div class="line">Grouping ()</div><div class="line">Literals - character, String, numeric, null</div><div class="line">Cast</div><div class="line">Method calls</div><div class="line">Field access</div><div class="line">Array access []</div><div class="line">Ternary operator ?:</div><div class="line">android:text=&quot;@&#123;String.valueOf(index + 1)&#125;&quot;</div><div class="line">android:visibility=&quot;@&#123;age &lt; 13 ? View.GONE : View.VISIBLE&#125;&quot;</div><div class="line">android:transitionName=&apos;@&#123;&quot;image_&quot; + id&#125;&apos;</div></pre></td></tr></table></figure>
+<p>###Missing Operations</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">this</div><div class="line">super</div><div class="line">new</div></pre></td></tr></table></figure>
+<p>增加的操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:text=&quot;@&#123;user.displayName ?? user.lastName&#125;&quot;</div></pre></td></tr></table></figure>
+<p>DataBinding 在ListAdapter 和 RecycleView中的用法DataBinding Import用法以及一些基本数据类型的使用</p>
+<h3 id="查看源码"><a href="#查看源码" class="headerlink" title="查看源码"></a>查看源码</h3><p>DataBinding 布局中使用的Import导入具体的包名就可以使用相应的包功能这点同java类似<br>基本类型可以不显示进行导包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">  &lt;data&gt;</div><div class="line"></div><div class="line">        &lt;import type=&quot;android.util.SparseArray&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;import type=&quot;java.util.Map&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;import type=&quot;java.util.List&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;variable</div><div class="line">            name=&quot;list&quot;</div><div class="line">            type=&quot;List&amp;lt;String&amp;gt;&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;variable</div><div class="line">            name=&quot;sparse&quot;</div><div class="line">            type=&quot;SparseArray&amp;lt;String&amp;gt;&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;variable</div><div class="line">            name=&quot;map&quot;</div><div class="line">            type=&quot;Map&amp;lt;String, String&amp;gt;&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;variable</div><div class="line">            name=&quot;index&quot;</div><div class="line">            type=&quot;int&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;variable</div><div class="line">            name=&quot;key&quot;</div><div class="line">            type=&quot;String&quot; /&gt;</div><div class="line">&lt;/data&gt;</div></pre></td></tr></table></figure>
+<p>用法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;TextView</div><div class="line">    android:layout_width=&quot;wrap_content&quot;</div><div class="line">    android:layout_height=&quot;wrap_content&quot;</div><div class="line">    android:text=&quot;list[index]:&quot;</div><div class="line">    android:textStyle=&quot;bold&quot; /&gt;</div></pre></td></tr></table></figure>
+<h3 id="DataBinding-类型转换使用"><a href="#DataBinding-类型转换使用" class="headerlink" title="DataBinding  类型转换使用"></a>DataBinding  类型转换使用</h3><p>请查看demo</p>
+<p>###DataBinding 自定义的属性用法的</p>
+<p> 自定义使用起来相当好用，而且不需要在attrs.xml中进行声明，只要提供相应set方法即可。Databinding会自动搜索相应的Set方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;dragger2.nuoyuan.com.myapplication.utils.NYImageView</div><div class="line">            android:id=&quot;@+id/img&quot;</div><div class="line">            android:layout_width=&quot;match_parent&quot;</div><div class="line">            android:layout_height=&quot;wrap_content&quot;</div><div class="line">            app:error=&quot;@&#123;@drawable/error&#125;&quot;</div><div class="line">            app:imageUrl=&quot;@&#123;imageUrl&#125;&quot; /&gt;</div></pre></td></tr></table></figure>
+<p>提供调用函数的，需要为静态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@BindingAdapter(&#123;&quot;imageUrl&quot;, &quot;error&quot;&#125;)</div><div class="line">public static void loadImage(ImageView view, String url, Drawable error) &#123;</div><div class="line">    Glide.with(activity).load(url).into(view);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Bindview之后设置显示Url地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">attrsetActivityBinding.setImageUrl(&quot;http://tse4.mm.bing.net/th?id=OIP.MKt6WVLkDWmz5ZKgzujUcwEsEs&amp;w=204&amp;h=201&amp;c=7&amp;qlt=90&amp;o=4&amp;dpr=1.1&amp;pid=1.7&quot;);</div></pre></td></tr></table></figure>
+<h3 id="DataBinding-中ViewStub-用法"><a href="#DataBinding-中ViewStub-用法" class="headerlink" title="DataBinding 中ViewStub 用法"></a>DataBinding 中ViewStub 用法</h3><p>请查看demo</p>
+<p>demo地址：<a href="https://github.com/yatou252303/googledatabinding" target="_blank" rel="external">https://github.com/yatou252303/googledatabinding</a></p>
+<hr>
+<blockquote>
+<p>引用：</p>
+<p>参考 db demo <a href="https://github.com/LyndonChin/MasteringAndroidDataBinding" target="_blank" rel="external">https://github.com/LyndonChin/MasteringAndroidDataBinding</a><br>googledb 翻译 <a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0603/2992.html" target="_blank" rel="external">http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0603/2992.html</a><br>官方地址 <a href="https://developer.android.com/topic/libraries/data-binding/index.html#generated_binding" target="_blank" rel="external">https://developer.android.com/topic/libraries/data-binding/index.html#generated_binding</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>生活不止眼前的苟且，还有诗和远方。</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/weixin.png" alt="newbie WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/24/学习-greenDao-3-1/" rel="next" title="学习 greenDao 3">
+                <i class="fa fa-chevron-left"></i> 学习 greenDao 3
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+	<span class="jiathis_txt">share to</span>
+	<a class="jiathis_button_tools_1"></a>
+	<a class="jiathis_button_tools_2"></a>
+	<a class="jiathis_button_tools_3"></a>
+	<a class="jiathis_button_tools_4"></a>
+	<a href="http://www.jiathis.com/share?uid=2131772" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">more</a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2131772" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="newbie" />
+          <p class="site-author-name" itemprop="name">newbie</p>
+           
+              <p class="site-description motion-element" itemprop="description">生命不息，奋斗不止，万事起于忽微，量变引起质变</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yatou252303" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/5288971550" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/o279642707" target="_blank" title="Csdn">
+                  
+                    <i class="fa fa-fw fa-csdn"></i>
+                  
+                  Csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">2.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些高级用法"><span class="nav-number">3.</span> <span class="nav-text">一些高级用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式1"><span class="nav-number">4.</span> <span class="nav-text">方式1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式2"><span class="nav-number">5.</span> <span class="nav-text">方式2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Include-嵌套Databinging-用法"><span class="nav-number">6.</span> <span class="nav-text">Include 嵌套Databinging 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DataBinding-支持的操作符号"><span class="nav-number">7.</span> <span class="nav-text">DataBinding 支持的操作符号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看源码"><span class="nav-number">8.</span> <span class="nav-text">查看源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DataBinding-类型转换使用"><span class="nav-number">9.</span> <span class="nav-text">DataBinding  类型转换使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DataBinding-中ViewStub-用法"><span class="nav-number">10.</span> <span class="nav-text">DataBinding 中ViewStub 用法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  
+  &copy;  2016- - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">newbie</span>
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://ppisland.top/2017/04/22/Android Data Binding Library/';
+          this.page.identifier = '2017/04/22/Android Data Binding Library/';
+          this.page.title = 'Android Data Binding Library';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131772"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Kp4DToFv8Xba0ooy4cJbdU8J-gzGzoHsz", "Hy618x2QqSG7JiArLR5x7T3J");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

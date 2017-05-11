@@ -1,0 +1,1215 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言学习android动画中发现svg矢量动画效果还不错。W3c中有完整的介绍。跟着api进行学习 什么是SVG？进入w3c  123456SVG 指可伸缩矢量图形 (Scalable Vector Graphics)SVG 用来定义用于网络的基于矢量的图形SVG 使用 XML 格式定义图形SVG 图像在放大或改变尺寸的情况下其图形质量不会有所损失SVG 是万维网联盟的标准SVG 与诸如 DOM">
+<meta name="keywords" content="android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="androd SVG 矢量动画">
+<meta property="og:url" content="http://ppisland.top/2017/04/25/androd-SVG-矢量动画/index.html">
+<meta property="og:site_name" content="newbie's Home">
+<meta property="og:description" content="前言学习android动画中发现svg矢量动画效果还不错。W3c中有完整的介绍。跟着api进行学习 什么是SVG？进入w3c  123456SVG 指可伸缩矢量图形 (Scalable Vector Graphics)SVG 用来定义用于网络的基于矢量的图形SVG 使用 XML 格式定义图形SVG 图像在放大或改变尺寸的情况下其图形质量不会有所损失SVG 是万维网联盟的标准SVG 与诸如 DOM">
+<meta property="og:image" content="http://img.blog.csdn.net/20170105162703940?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjcyNTg3OTk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170411173825608?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170411173905485?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170411173914812?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-04-25T14:07:50.025Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="androd SVG 矢量动画">
+<meta name="twitter:description" content="前言学习android动画中发现svg矢量动画效果还不错。W3c中有完整的介绍。跟着api进行学习 什么是SVG？进入w3c  123456SVG 指可伸缩矢量图形 (Scalable Vector Graphics)SVG 用来定义用于网络的基于矢量的图形SVG 使用 XML 格式定义图形SVG 图像在放大或改变尺寸的情况下其图形质量不会有所损失SVG 是万维网联盟的标准SVG 与诸如 DOM">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170105162703940?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjcyNTg3OTk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '0T2YBYB10G',
+      apiKey: '33c8a1d9c36467051a937fe5eb574fa1',
+      indexName: 'newbie',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ppisland.top/2017/04/25/androd-SVG-矢量动画/"/>
+
+
+
+
+
+  <title>androd SVG 矢量动画 | newbie's Home</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7918cfc849c65f9bc6545b6b868cb36c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">newbie's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ppisland.top/2017/04/25/androd-SVG-矢量动画/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="newbie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="newbie's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                androd SVG 矢量动画
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T22:03:41+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/programming/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/25/androd-SVG-矢量动画/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/04/25/androd-SVG-矢量动画/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/25/androd-SVG-矢量动画/" class="leancloud_visitors" data-flag-title="androd SVG 矢量动画">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>学习android动画中发现svg矢量动画效果还不错。W3c中有完整的介绍。跟着api进行学习</p>
+<h4 id="什么是SVG？"><a href="#什么是SVG？" class="headerlink" title="什么是SVG？"></a>什么是SVG？</h4><p><a href="http://www.w3school.com.cn/svg/svg_reference.asp" target="_blank" rel="external">进入w3c</a> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">SVG 指可伸缩矢量图形 (Scalable Vector Graphics)</div><div class="line">SVG 用来定义用于网络的基于矢量的图形</div><div class="line">SVG 使用 XML 格式定义图形</div><div class="line">SVG 图像在放大或改变尺寸的情况下其图形质量不会有所损失</div><div class="line">SVG 是万维网联盟的标准</div><div class="line">SVG 与诸如 DOM 和 XSL 之类的 W3C 标准是一个整体</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="SVG-的历史和优势"><a href="#SVG-的历史和优势" class="headerlink" title="SVG 的历史和优势"></a>SVG 的历史和优势</h4><p>在 2003 年一月，SVG 1.1 被确立为 W3C 标准。<br>参与定义 SVG 的组织有：太阳微系统、Adobe、苹果公司、IBM 以及柯达。<br>与其他图像格式相比，使用 SVG 的优势在于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">SVG 可被非常多的工具读取和修改（比如记事本）</div><div class="line">SVG 与 JPEG 和 GIF 图像比起来，尺寸更小，且可压缩性更强。</div><div class="line">SVG 是可伸缩的</div><div class="line">SVG 图像可在任何的分辨率下被高质量地打印</div><div class="line">SVG 可在图像质量不下降的情况下被放大</div><div class="line">SVG 图像中的文本是可选的，同时也是可搜索的（很适合制作地图）</div><div class="line">SVG 可以与 Java 技术一起运行</div><div class="line">SVG 是开放的标准</div><div class="line">SVG 文件是纯粹的 XML</div><div class="line">SVG 的主要竞争者是 Flash。</div></pre></td></tr></table></figure>
+<p>与 Flash 相比，SVG 最大的优势是与其他标准（比如 XSL 和 DOM）相兼容。而 Flash 则是未开源的私有技术。</p>
+<h4 id="Svg-格式"><a href="#Svg-格式" class="headerlink" title="Svg 格式"></a>Svg 格式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;</div><div class="line">&lt;!DOCTYPE svg PUBLIC &quot;-//W3C//DTD SVG 1.1//EN&quot; </div><div class="line">&quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot;&gt;</div><div class="line"></div><div class="line">&lt;svg width=&quot;100%&quot; height=&quot;100%&quot; version=&quot;1.1&quot;</div><div class="line">xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;</div><div class="line"></div><div class="line">&lt;circle cx=&quot;100&quot; cy=&quot;50&quot; r=&quot;40&quot; stroke=&quot;black&quot;</div><div class="line">stroke-width=&quot;2&quot; fill=&quot;red&quot;/&gt;</div><div class="line"></div><div class="line">&lt;/svg&gt;</div><div class="line"></div><div class="line">Svg 标示符号 &lt;svg&gt;,&lt;/svg&gt;</div><div class="line">&lt;circle cx=&quot;100&quot; cy=&quot;50&quot; r=&quot;40&quot; stroke=&quot;black&quot;</div><div class="line">stroke-width=&quot;2&quot; fill=&quot;red&quot;/&gt;</div></pre></td></tr></table></figure>
+<h4 id="简单的动画控制"><a href="#简单的动画控制" class="headerlink" title="简单的动画控制"></a>简单的动画控制</h4><p>这里我们只讨论客户端的实现方案，svg最主要的是<strong>Svg Path</strong> 路径点。也就是动画点。</p>
+<p>效果：<br><img src="http://img.blog.csdn.net/20170105162703940?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMjcyNTg3OTk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="1-path-是怎么来？"><a href="#1-path-是怎么来？" class="headerlink" title="1.path 是怎么来？"></a>1.path 是怎么来？</h3><p>1.使用具体的工具去画矢量图, PS也可以，生成路径–导出路径留待使用</p>
+<p>2.使用图片最背景选取具体的绘制路径的点，并生成路径，推荐GIMP （ps也同样可以）</p>
+<p>这里使用GIMP 进行举例子，photoshop 需要下载svg插件。</p>
+<p><img src="http://img.blog.csdn.net/20170411173825608?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20170411173905485?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="http://img.blog.csdn.net/20170411173914812?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="引出第三个问题-SVG-路径转换为Android，w3c给出了定义"><a href="#引出第三个问题-SVG-路径转换为Android，w3c给出了定义" class="headerlink" title="引出第三个问题 SVG 路径转换为Android，w3c给出了定义"></a>引出第三个问题 SVG 路径转换为Android，w3c给出了定义</h4><p>SVG路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;</div><div class="line">&lt;!DOCTYPE svg PUBLIC &quot;-//W3C//DTD SVG 20010904//EN&quot;</div><div class="line">              &quot;http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd&quot;&gt;</div><div class="line"></div><div class="line">&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot;</div><div class="line">     width=&quot;3.02778in&quot; height=&quot;3.16667in&quot;</div><div class="line">     viewBox=&quot;0 0 218 228&quot;&gt;</div><div class="line">  &lt;path id=&quot;选区&quot;</div><div class="line">        fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;1&quot;</div><div class="line">        d=&quot;M 218.00,0.00</div><div class="line">           C 218.00,0.00 218.00,228.00 218.00,228.00</div><div class="line">             218.00,228.00 0.00,228.00 0.00,228.00</div><div class="line">             0.00,228.00 0.00,0.00 0.00,0.00</div><div class="line">             0.00,0.00 218.00,0.00 218.00,0.00 Z</div><div class="line">           M 85.00,49.00</div><div class="line">           C 74.10,43.40 58.80,29.70 48.00,27.00</div><div class="line">             47.37,32.11 49.50,33.50 53.00,36.99</div><div class="line">             56.74,40.70 69.43,51.00 70.91,55.00</div><div class="line">             72.37,58.95 66.69,71.89 61.00,73.75</div><div class="line">             58.27,74.64 54.63,72.09 52.00,71.00</div><div class="line">             ...</div><div class="line">             ...</div><div class="line">             ...</div><div class="line">            C 171.48,178.95 171.13,180.88 171.76,183.00</div><div class="line">             172.25,184.63 173.11,185.64 174.00,187.00</div><div class="line">             171.36,190.02 171.47,190.34 173.00,194.00</div><div class="line">             162.60,203.60 182.46,205.63 188.77,200.99</div><div class="line">             193.07,197.84 192.64,192.04 186.98,190.14</div><div class="line">             185.36,189.97 182.72,190.01 181.00,190.14</div><div class="line">             181.00,190.14 177.00,190.14 177.00,190.14</div><div class="line">             177.00,190.14 177.00,188.00 177.00,188.00</div><div class="line">             184.57,187.98 190.42,187.53 189.00,178.00</div><div class="line">             189.00,178.00 192.00,175.00 192.00,175.00</div><div class="line">             185.59,174.69 177.39,170.44 172.74,177.13 Z&quot; /&gt;</div><div class="line">&lt;/svg&gt;</div></pre></td></tr></table></figure>
+<h4 id="2-SVG-路径转换为Android中能被Paint-draw的点"><a href="#2-SVG-路径转换为Android中能被Paint-draw的点" class="headerlink" title="2.SVG 路径转换为Android中能被Paint draw的点"></a>2.SVG 路径转换为Android中能被Paint draw的点</h4><p>格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">M = moveto， 相当于android 里的 moveTo()</div><div class="line"></div><div class="line">L = lineto， 相当于lineTo()进行画直线</div><div class="line"></div><div class="line">H = horizontal lineto， 画水平直线</div><div class="line"></div><div class="line">V = vertical lineto， 画竖直直线</div><div class="line"></div><div class="line">C = curveto， 相当于android 里的 cubicTo()</div><div class="line"></div><div class="line">S = smooth curveto</div><div class="line"></div><div class="line">Q = quadratic Belzier curve</div><div class="line"></div><div class="line">T = smooth quadratic Belzier curveto</div><div class="line"></div><div class="line">A = elliptical Arc</div><div class="line"></div><div class="line">Z = closepath</div></pre></td></tr></table></figure>
+<p>在这里需要将svg文件转换为能别Paint画笔处理具体值，这里使用网上给出的一个封装好的工具类进行解析path处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div></pre></td><td class="code"><pre><div class="line">package com.gaok.ui.svgtrace.utils;</div><div class="line"></div><div class="line">import android.graphics.Path;</div><div class="line">import android.graphics.PointF;</div><div class="line"></div><div class="line">public class SvgPathParser &#123;</div><div class="line"></div><div class="line">    private static final int TOKEN_ABSOLUTE_COMMAND = 1;</div><div class="line">    private static final int TOKEN_RELATIVE_COMMAND = 2;</div><div class="line">    // 具体的数值或&quot;.&quot;&quot;-&quot;</div><div class="line">    private static final int TOKEN_VALUE = 3;</div><div class="line">    private static final int TOKEN_EOF = 4;</div><div class="line"></div><div class="line">    private int mCurrentToken;</div><div class="line">    private PointF mCurrentPoint = new PointF();</div><div class="line">    private int mLength;</div><div class="line">    private int mIndex;</div><div class="line">    // 要解析的path 字符串</div><div class="line">    private String mPathString;</div><div class="line">    private float scale = 4f;</div><div class="line">    private float xMin;</div><div class="line">    private float xMax;</div><div class="line">    private float yMin;</div><div class="line">    private float yMax;</div><div class="line"></div><div class="line">    protected float transformX(float x) &#123;</div><div class="line">        return x * scale;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    protected float transformY(float y) &#123;</div><div class="line">        return y * scale;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Path parsePath(String s) &#123;</div><div class="line">        try &#123;</div><div class="line">            mCurrentPoint.set(Float.NaN, Float.NaN);</div><div class="line">            mPathString = s;</div><div class="line">            mIndex = 0;</div><div class="line">            mLength = mPathString.length();</div><div class="line"></div><div class="line">            PointF tempPoint1 = new PointF();</div><div class="line">            PointF tempPoint2 = new PointF();</div><div class="line">            PointF tempPoint3 = new PointF();</div><div class="line"></div><div class="line">            Path p = new Path();</div><div class="line">            p.setFillType(Path.FillType.WINDING);</div><div class="line"></div><div class="line">            boolean firstMove = true;</div><div class="line">            while (mIndex &lt; mLength) &#123;</div><div class="line">                char command = consumeCommand();</div><div class="line">                boolean relative = (mCurrentToken == TOKEN_RELATIVE_COMMAND);</div><div class="line">                switch (command) &#123;</div><div class="line">                    case &apos;M&apos;:</div><div class="line">                    case &apos;m&apos;: &#123;</div><div class="line">                        // m指令，相当于android 里的 moveTo()</div><div class="line">                        boolean firstPoint = true;</div><div class="line">                        while (advanceToNextToken() == TOKEN_VALUE) &#123;</div><div class="line">                            consumeAndTransformPoint(tempPoint1, relative &amp;&amp; mCurrentPoint.x != Float.NaN);</div><div class="line">                            if (firstPoint) &#123;</div><div class="line">                                p.moveTo(tempPoint1.x, tempPoint1.y);</div><div class="line">                                firstPoint = false;</div><div class="line">                                if (firstMove) &#123;</div><div class="line">                                    mCurrentPoint.set(tempPoint1);</div><div class="line">                                    firstMove = false;</div><div class="line">                                &#125;</div><div class="line">                            &#125; else &#123;</div><div class="line">                                p.lineTo(tempPoint1.x, tempPoint1.y);</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                        mCurrentPoint.set(tempPoint1);</div><div class="line">                        break;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    case &apos;C&apos;:</div><div class="line">                    case &apos;c&apos;: &#123;</div><div class="line">                        // c指令，相当于android 里的 cubicTo()</div><div class="line">                        if (mCurrentPoint.x == Float.NaN) &#123;</div><div class="line">                            throw new Exception(&quot;Relative commands require current point&quot;);</div><div class="line">                        &#125;</div><div class="line"></div><div class="line">                        while (advanceToNextToken() == TOKEN_VALUE) &#123;</div><div class="line">                            consumeAndTransformPoint(tempPoint1, relative);</div><div class="line">                            consumeAndTransformPoint(tempPoint2, relative);</div><div class="line">                            consumeAndTransformPoint(tempPoint3, relative);</div><div class="line">                            p.cubicTo(tempPoint1.x, tempPoint1.y, tempPoint2.x, tempPoint2.y, tempPoint3.x, tempPoint3.y);</div><div class="line">                        &#125;</div><div class="line">                        mCurrentPoint.set(tempPoint3);</div><div class="line">                        break;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    case &apos;L&apos;:</div><div class="line">                    case &apos;l&apos;: &#123;</div><div class="line">                        // 相当于lineTo()进行画直线</div><div class="line">                        if (mCurrentPoint.x == Float.NaN) &#123;</div><div class="line">                            throw new Exception(&quot;Relative commands require current point&quot;);</div><div class="line">                        &#125;</div><div class="line"></div><div class="line">                        while (advanceToNextToken() == TOKEN_VALUE) &#123;</div><div class="line">                            consumeAndTransformPoint(tempPoint1, relative);</div><div class="line">                            p.lineTo(tempPoint1.x, tempPoint1.y);</div><div class="line">                        &#125;</div><div class="line">                        mCurrentPoint.set(tempPoint1);</div><div class="line">                        break;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    case &apos;H&apos;:</div><div class="line">                    case &apos;h&apos;: &#123;</div><div class="line">                        // 画水平直线</div><div class="line">                        if (mCurrentPoint.x == Float.NaN) &#123;</div><div class="line">                            throw new Exception(&quot;Relative commands require current point&quot;);</div><div class="line">                        &#125;</div><div class="line"></div><div class="line">                        while (advanceToNextToken() == TOKEN_VALUE) &#123;</div><div class="line">                            float x = transformX(consumeValue());</div><div class="line">                            if (relative) &#123;</div><div class="line">                                x += mCurrentPoint.x;</div><div class="line">                            &#125;</div><div class="line">                            p.lineTo(x, mCurrentPoint.y);</div><div class="line">                        &#125;</div><div class="line">                        mCurrentPoint.set(tempPoint1);</div><div class="line">                        break;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    case &apos;V&apos;:</div><div class="line">                    case &apos;v&apos;: &#123;</div><div class="line">                        // 画竖直直线</div><div class="line">                        if (mCurrentPoint.x == Float.NaN) &#123;</div><div class="line">                            throw new Exception(&quot;Relative commands require current point&quot;);</div><div class="line">                        &#125;</div><div class="line"></div><div class="line">                        while (advanceToNextToken() == TOKEN_VALUE) &#123;</div><div class="line">                            float y = transformY(consumeValue());</div><div class="line">                            if (relative) &#123;</div><div class="line">                                y += mCurrentPoint.y;</div><div class="line">                            &#125;</div><div class="line">                            p.lineTo(mCurrentPoint.x, y);</div><div class="line">                        &#125;</div><div class="line">                        mCurrentPoint.set(tempPoint1);</div><div class="line">                        break;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    case &apos;Z&apos;:</div><div class="line">                    case &apos;z&apos;: &#123;</div><div class="line">                        // 封闭path</div><div class="line">                        p.close();</div><div class="line">                        break;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            return p;</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private int advanceToNextToken() &#123;</div><div class="line">        while (mIndex &lt; mLength) &#123;</div><div class="line">            char c = mPathString.charAt(mIndex);</div><div class="line">            if (&apos;a&apos; &lt;= c &amp;&amp; c &lt;= &apos;z&apos;) &#123;</div><div class="line">                return (mCurrentToken = TOKEN_RELATIVE_COMMAND);</div><div class="line">            &#125; else if (&apos;A&apos; &lt;= c &amp;&amp; c &lt;= &apos;Z&apos;) &#123;</div><div class="line">                return (mCurrentToken = TOKEN_ABSOLUTE_COMMAND);</div><div class="line">            &#125; else if ((&apos;0&apos; &lt;= c &amp;&amp; c &lt;= &apos;9&apos;) || c == &apos;.&apos; || c == &apos;-&apos;) &#123;</div><div class="line">                return (mCurrentToken = TOKEN_VALUE);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            ++mIndex;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return (mCurrentToken = TOKEN_EOF);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private char consumeCommand() throws Exception &#123;</div><div class="line">        advanceToNextToken();</div><div class="line">        if (mCurrentToken != TOKEN_RELATIVE_COMMAND &amp;&amp; mCurrentToken != TOKEN_ABSOLUTE_COMMAND) &#123;</div><div class="line">            throw new Exception(&quot;Expected command&quot;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return mPathString.charAt(mIndex++);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void consumeAndTransformPoint(PointF out, boolean relative) throws Exception &#123;</div><div class="line">        float xValue = consumeValue();</div><div class="line">        out.x = transformX(xValue);</div><div class="line">        if (out.x &lt; xMin) &#123;</div><div class="line">            xMin = out.x;</div><div class="line">        &#125; else if (out.x &gt; xMax) &#123;</div><div class="line">            xMax = out.x;</div><div class="line">        &#125;</div><div class="line">        float yValue = consumeValue();</div><div class="line">        out.y = transformY(yValue);</div><div class="line">        if (out.y &lt; yMin) &#123;</div><div class="line">            yMin = out.y;</div><div class="line">        &#125; else if (out.y &gt; yMax) &#123;</div><div class="line">            yMax = out.y;</div><div class="line">        &#125;</div><div class="line">        if (relative) &#123;</div><div class="line">            out.x += mCurrentPoint.x;</div><div class="line">            out.y += mCurrentPoint.y;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private float consumeValue() throws Exception &#123;</div><div class="line">        advanceToNextToken();</div><div class="line">        if (mCurrentToken != TOKEN_VALUE) &#123;</div><div class="line">            throw new Exception(&quot;Expected value&quot;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        boolean start = true;</div><div class="line">        boolean seenDot = false;</div><div class="line">        int index = mIndex;</div><div class="line">        while (index &lt; mLength) &#123;</div><div class="line">            char c = mPathString.charAt(index);</div><div class="line">            if (!(&apos;0&apos; &lt;= c &amp;&amp; c &lt;= &apos;9&apos;) &amp;&amp; (c != &apos;.&apos; || seenDot) &amp;&amp; (c != &apos;-&apos; || !start)) &#123;</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">            if (c == &apos;.&apos;) &#123;</div><div class="line">                seenDot = true;</div><div class="line">            &#125;</div><div class="line">            start = false;</div><div class="line">            ++index;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if (index == mIndex) &#123;</div><div class="line">            throw new Exception(&quot;Expected value&quot;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        String str = mPathString.substring(mIndex, index);</div><div class="line">        try &#123;</div><div class="line">            float value = Float.parseFloat(str);</div><div class="line">            mIndex = index;</div><div class="line">            return value;</div><div class="line">        &#125; catch (NumberFormatException e) &#123;</div><div class="line">            throw new Exception(&quot;Invalid float value &apos;&quot; + str + &quot;&apos;.&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public float getPathWidth() &#123;</div><div class="line">        return xMax - xMin;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public float getPathHeight() &#123;</div><div class="line">        return yMax - yMin;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>转到studio中将路径值保存在String中留待使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;resources&gt;</div><div class="line">    &lt;string name=&quot;app_name&quot;&gt;demo&lt;/string&gt;</div><div class="line">    &lt;string name=&quot;path&quot;&gt;</div><div class="line">     M 85.00,34.57</div><div class="line">           C 90.35,27.78 95.91,20.00 99.32,12.00</div><div class="line">             100.42,9.42 101.66,3.01 102.93,1.60</div><div class="line">             ...</div><div class="line">             ...</div><div class="line">             ...</div><div class="line">           M 238.00,387.00</div><div class="line">           C 238.00,387.00 239.00,388.00 239.00,388.00</div><div class="line">             239.00,388.00 239.00,387.00 239.00,387.00</div><div class="line">             239.00,387.00 238.00,387.00 238.00,387.00 Z</div><div class="line">         </div><div class="line">    &lt;/string&gt;</div><div class="line">&lt;/resources&gt;</div></pre></td></tr></table></figure>
+<p>万事具备只差画出来了</p>
+<h4 id="3-如何绘制到屏幕？"><a href="#3-如何绘制到屏幕？" class="headerlink" title="3.如何绘制到屏幕？"></a>3.如何绘制到屏幕？</h4><p>在自定义view onDraw（）方法调用系统方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> public void drawPath(@NonNull Path path, @NonNull Paint paint) &#123;</div><div class="line">        if (path.isSimplePath &amp;&amp; path.rects != null) &#123;</div><div class="line">            native_drawRegion(mNativeCanvasWrapper, path.rects.mNativeRegion, paint.getNativeInstance());</div><div class="line">        &#125; else &#123;</div><div class="line">            native_drawPath(mNativeCanvasWrapper, path.readOnlyNI(), paint.getNativeInstance());</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">canvas.drawPath(mSvgPath, mPaint);</div></pre></td></tr></table></figure>
+<p>至于动画效果这里不做深入，感兴趣自行阅读引用相关的实现代码。</p>
+<blockquote>
+<p>引用<br>Svg 使用 <a href="http://blog.csdn.net/tianjian4592/article/details/44538605" target="_blank" rel="external">http://blog.csdn.net/tianjian4592/article/details/44538605</a><br>Svg  demo   <a href="https://github.com/unclepizza/SVGTraceDemo.git" target="_blank" rel="external">https://github.com/unclepizza/SVGTraceDemo.git</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>生活不止眼前的苟且，还有诗和远方。</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/weixin.png" alt="newbie WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/26/Android-Debug-Database/" rel="next" title="Android Debug Database">
+                <i class="fa fa-chevron-left"></i> Android Debug Database
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/24/学习-greenDao-3-1/" rel="prev" title="学习 greenDao 3">
+                学习 greenDao 3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+	<span class="jiathis_txt">share to</span>
+	<a class="jiathis_button_tools_1"></a>
+	<a class="jiathis_button_tools_2"></a>
+	<a class="jiathis_button_tools_3"></a>
+	<a class="jiathis_button_tools_4"></a>
+	<a href="http://www.jiathis.com/share?uid=2131772" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">more</a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2131772" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="newbie" />
+          <p class="site-author-name" itemprop="name">newbie</p>
+           
+              <p class="site-description motion-element" itemprop="description">生命不息，奋斗不止，万事起于忽微，量变引起质变</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yatou252303" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/5288971550" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/o279642707" target="_blank" title="Csdn">
+                  
+                    <i class="fa fa-fw fa-csdn"></i>
+                  
+                  Csdn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是SVG？"><span class="nav-number">2.</span> <span class="nav-text">什么是SVG？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SVG-的历史和优势"><span class="nav-number">3.</span> <span class="nav-text">SVG 的历史和优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Svg-格式"><span class="nav-number">4.</span> <span class="nav-text">Svg 格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单的动画控制"><span class="nav-number">5.</span> <span class="nav-text">简单的动画控制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-path-是怎么来？"><span class="nav-number"></span> <span class="nav-text">1.path 是怎么来？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引出第三个问题-SVG-路径转换为Android，w3c给出了定义"><span class="nav-number">1.</span> <span class="nav-text">引出第三个问题 SVG 路径转换为Android，w3c给出了定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-SVG-路径转换为Android中能被Paint-draw的点"><span class="nav-number">2.</span> <span class="nav-text">2.SVG 路径转换为Android中能被Paint draw的点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-如何绘制到屏幕？"><span class="nav-number">3.</span> <span class="nav-text">3.如何绘制到屏幕？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  
+  &copy;  2016- - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">newbie</span>
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://ppisland.top/2017/04/25/androd-SVG-矢量动画/';
+          this.page.identifier = '2017/04/25/androd-SVG-矢量动画/';
+          this.page.title = 'androd SVG 矢量动画';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131772"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Kp4DToFv8Xba0ooy4cJbdU8J-gzGzoHsz", "Hy618x2QqSG7JiArLR5x7T3J");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
