@@ -90,21 +90,21 @@
 
 
 
-<meta name="description" content="####　前言   高楼万丈平地起，没有基础何来上层建筑，这篇blog就是一个对View 绘制流程的一个梳理。当然不免回引用高手只言片语。 View 绘制原理的三个关键步骤: 提起view绘制原理不免会将View,Viewgroup 区别开来，有兴趣可以看下View层级结构，这样可以更加深入理解View OnMesure（）####　一、源码中的measure/onMeasure方法： 1234p">
+<meta name="description" content="前言  高楼万丈平地起，没有基础何来上层建筑，这篇blog就是一个对View 绘制流程的一个梳理。当然不免回引用高手只言片语。 View 绘制原理的三个关键步骤: 提起view绘制原理不免会将View,Viewgroup 区别开来，有兴趣可以看下View层级结构，这样可以更加深入理解View OnMesure（）一、源码中的measure/onMeasure方法：1234protected voi">
 <meta name="keywords" content="android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android View 绘制原理">
 <meta property="og:url" content="http://ppisland.top/2017/05/17/Android-View-绘制原理/index.html">
 <meta property="og:site_name" content="newbie's Home">
-<meta property="og:description" content="####　前言   高楼万丈平地起，没有基础何来上层建筑，这篇blog就是一个对View 绘制流程的一个梳理。当然不免回引用高手只言片语。 View 绘制原理的三个关键步骤: 提起view绘制原理不免会将View,Viewgroup 区别开来，有兴趣可以看下View层级结构，这样可以更加深入理解View OnMesure（）####　一、源码中的measure/onMeasure方法： 1234p">
+<meta property="og:description" content="前言  高楼万丈平地起，没有基础何来上层建筑，这篇blog就是一个对View 绘制流程的一个梳理。当然不免回引用高手只言片语。 View 绘制原理的三个关键步骤: 提起view绘制原理不免会将View,Viewgroup 区别开来，有兴趣可以看下View层级结构，这样可以更加深入理解View OnMesure（）一、源码中的measure/onMeasure方法：1234protected voi">
 <meta property="og:image" content="http://my.csdn.net/uploads/201208/01/1343827041_4739.png">
 <meta property="og:image" content="http://img.blog.csdn.net/20150413170503566">
 <meta property="og:image" content="http://img.blog.csdn.net/20150413172415210">
 <meta property="og:image" content="http://img.blog.csdn.net/20150413174301575">
-<meta property="og:updated_time" content="2017-05-17T15:58:06.130Z">
+<meta property="og:updated_time" content="2017-05-17T23:55:28.481Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android View 绘制原理">
-<meta name="twitter:description" content="####　前言   高楼万丈平地起，没有基础何来上层建筑，这篇blog就是一个对View 绘制流程的一个梳理。当然不免回引用高手只言片语。 View 绘制原理的三个关键步骤: 提起view绘制原理不免会将View,Viewgroup 区别开来，有兴趣可以看下View层级结构，这样可以更加深入理解View OnMesure（）####　一、源码中的measure/onMeasure方法： 1234p">
+<meta name="twitter:description" content="前言  高楼万丈平地起，没有基础何来上层建筑，这篇blog就是一个对View 绘制流程的一个梳理。当然不免回引用高手只言片语。 View 绘制原理的三个关键步骤: 提起view绘制原理不免会将View,Viewgroup 区别开来，有兴趣可以看下View层级结构，这样可以更加深入理解View OnMesure（）一、源码中的measure/onMeasure方法：1234protected voi">
 <meta name="twitter:image" content="http://my.csdn.net/uploads/201208/01/1343827041_4739.png">
 
 
@@ -443,12 +443,10 @@
       
 
       
-        <p>####　前言</p>
-<p>  高楼万丈平地起，没有基础何来上层建筑，这篇blog就是一个对View 绘制流程的一个梳理。当然不免回引用高手只言片语。</p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>  高楼万丈平地起，没有基础何来上层建筑，这篇blog就是一个对View 绘制流程的一个梳理。当然不免回引用高手只言片语。</p>
 <p>View 绘制原理的三个关键步骤:</p>
 <p>提起view绘制原理不免会将View,Viewgroup 区别开来，有兴趣可以看下View层级结构，这样可以更加深入理解View</p>
-<h3 id="OnMesure（）"><a href="#OnMesure（）" class="headerlink" title="OnMesure（）"></a>OnMesure（）</h3><p>####　一、源码中的measure/onMeasure方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;  </div><div class="line">    setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),  </div><div class="line">            getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="OnMesure（）"><a href="#OnMesure（）" class="headerlink" title="OnMesure（）"></a>OnMesure（）</h3><h4 id="一、源码中的measure-onMeasure方法："><a href="#一、源码中的measure-onMeasure方法：" class="headerlink" title="一、源码中的measure/onMeasure方法："></a>一、源码中的measure/onMeasure方法：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;  </div><div class="line">    setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),  </div><div class="line">            getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>实际上是在View这个类中的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public final void measure(int widthMeasureSpec, int heightMeasureSpec)</div></pre></td></tr></table></figure>
@@ -749,7 +747,7 @@ var jiathis_config = {data_track_clickback:'true'};
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#OnMesure（）"><span class="nav-number">1.</span> <span class="nav-text">OnMesure（）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、measure"><span class="nav-number">1.1.</span> <span class="nav-text">1、measure()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、onMeasure"><span class="nav-number">1.2.</span> <span class="nav-text">2、onMeasure</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、MeasureSpec"><span class="nav-number">2.</span> <span class="nav-text">二、MeasureSpec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Onlayout"><span class="nav-number">3.</span> <span class="nav-text">Onlayout( )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onDraw"><span class="nav-number">4.</span> <span class="nav-text">onDraw()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OnMesure（）"><span class="nav-number"></span> <span class="nav-text">OnMesure（）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、源码中的measure-onMeasure方法："><span class="nav-number">1.</span> <span class="nav-text">一、源码中的measure/onMeasure方法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1、measure"><span class="nav-number">2.</span> <span class="nav-text">1、measure()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、onMeasure"><span class="nav-number">3.</span> <span class="nav-text">2、onMeasure</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、MeasureSpec"><span class="nav-number"></span> <span class="nav-text">二、MeasureSpec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Onlayout"><span class="nav-number"></span> <span class="nav-text">Onlayout( )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onDraw"><span class="nav-number"></span> <span class="nav-text">onDraw()</span></a></div>
             
 
           </div>
