@@ -101,7 +101,8 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20150413170503566">
 <meta property="og:image" content="http://img.blog.csdn.net/20150413172415210">
 <meta property="og:image" content="http://img.blog.csdn.net/20150413174301575">
-<meta property="og:updated_time" content="2017-05-17T23:55:28.481Z">
+<meta property="og:image" content="http://img.blog.csdn.net/20170518141024674?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-05-18T14:22:45.284Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android View 绘制原理">
 <meta name="twitter:description" content="前言  高楼万丈平地起，没有基础何来上层建筑，这篇blog就是一个对View 绘制流程的一个梳理。当然不免回引用高手只言片语。 View 绘制原理的三个关键步骤: 提起view绘制原理不免会将View,Viewgroup 区别开来，有兴趣可以看下View层级结构，这样可以更加深入理解View OnMesure（）一、源码中的measure/onMeasure方法：1234protected voi">
@@ -484,8 +485,159 @@
 <blockquote>
 <p><a href="http://blog.csdn.net/cyp331203/article/details/45027641" target="_blank" rel="external">http://blog.csdn.net/cyp331203/article/details/45027641</a><br><a href="http://blog.csdn.net/cyp331203/article/details/45027641" target="_blank" rel="external">http://blog.csdn.net/cyp331203/article/details/45027641</a></p>
 </blockquote>
-<h3 id="Onlayout"><a href="#Onlayout" class="headerlink" title="Onlayout( )"></a>Onlayout( )</h3><p>更新中….</p>
-<h3 id="onDraw"><a href="#onDraw" class="headerlink" title="onDraw()"></a>onDraw()</h3><p>更新中…</p>
+<h4 id="1-Onlayout"><a href="#1-Onlayout" class="headerlink" title="1.Onlayout()"></a>1.Onlayout()</h4><p>对于自定义View，分为两种:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.是自定义控件（继承View类）.</div><div class="line">2.是自定义布局容器（继承ViewGroup）。</div></pre></td></tr></table></figure>
+<p><strong>自定义View时候注意几个点</strong>：</p>
+<p>如果是自定义控件（View），则一般需要重载两个方法，一个是onMeasure()，<br>用来测量控件尺寸，另一个是onDraw()，用来绘制控件的UI。</p>
+<p>而自定义布局容器，则一般需要实现/重载三个方法，一个是onMeasure()，<br>也是用来测量尺寸；一个是onLayout()，用来布局子控件；<br>还有一个是dispatchDraw()，用来绘制UI。</p>
+<p>相对于（控件）View自定义 布局容器（viewgroup）有点难度，这里拿Viewgroup进行举例。</p>
+<p>1.ViewGroup类的onLayout()函数是abstract型，继承者必须实现，由于ViewGroup的定位就是一个容器，<br>用来盛放子控件的，所以就必须定义要以什么的方式来盛放，<br>比如LinearLayout就是以横向或者纵向顺序存放，而RelativeLayout则以相对位置来摆放子控件，<br>同样，我们的自定义ViewGroup也必须给出我们期望的布局方式，而这个定义就通过onLayout()函数来实现。</p>
+<h4 id="2-自定义Viewgroup-派生类"><a href="#2-自定义Viewgroup-派生类" class="headerlink" title="2.自定义Viewgroup 派生类"></a>2.自定义Viewgroup 派生类</h4><p>第一步，则是自定ViewGroup的派生类，继承默认的构造函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class MesureViewgroup extends ViewGroup &#123;</div><div class="line">    public MesureViewgroup(Context context) &#123;</div><div class="line">        super(context, null);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public MesureViewgroup(Context context, AttributeSet attrs) &#123;</div><div class="line">        super(context, attrs, 0);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public MesureViewgroup(Context context, AttributeSet attrs, int defStyle) &#123;</div><div class="line">        super(context, attrs, defStyle);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-重载OnMesure（）"><a href="#3-重载OnMesure（）" class="headerlink" title="3.重载OnMesure（）"></a>3.重载OnMesure（）</h4><p>  这里需要注意的是，自定义ViewGroup的onMeasure()方法中，除了计算自身的尺寸外，<br>  还需要调用measureChildren()函数来计算子控件的尺寸。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</div><div class="line">      super.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">      //要求子类进行</div><div class="line">      measureChildren(widthMeasureSpec, heightMeasureSpec);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<pre><code>3.  实现onLayout()方法
+
+  //abstrct class，子类必须重写
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">@Override</div><div class="line">protected void onLayout(boolean changed, int l, int t, int r, int b) &#123;</div><div class="line">    //进行布局排列</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>    1）参数changed表示view有新的尺寸或位置搜索；
+    2）参数l表示相对于父view的Left位置；
+    3）参数t表示相对于父view的Top位置；
+    4）参数r表示相对于父view的Right位置；
+    5）参数b表示相对于父view的Bottom位置。
+
+
+到这一步已经完成自定义的前期工作，接下来需要设置viweproup的排列方式，这里介绍水平排列
+方式加深理解。
+
+ 需求：水平排列，当超过一屏自动换行到下一行进行绘制
+
+ 分析：
+
+    1,需要知道自定义的ViewGroup 宽度  getMeasuredWidth()
+    2.需要知道子View的宽度   子view .getMeasuredWidth()
+</code></pre><p> 代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">   package com.acmenxd.mvp.utils.widget;</div><div class="line">import android.content.Context;</div><div class="line">import android.util.AttributeSet;</div><div class="line">import android.view.View;</div><div class="line">import android.view.ViewGroup;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by weichyang on 2017/5/18.</div><div class="line"> */</div><div class="line"></div><div class="line">public class MesureViewgroup extends ViewGroup &#123;</div><div class="line">	public MesureViewgroup(Context context) &#123;</div><div class="line">		super(context, null);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public MesureViewgroup(Context context, AttributeSet attrs) &#123;</div><div class="line">		super(context, attrs, 0);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public MesureViewgroup(Context context, AttributeSet attrs, int defStyle) &#123;</div><div class="line">		super(context, attrs, defStyle);</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">	@Override</div><div class="line">	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</div><div class="line">		super.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">		//要求子类进行</div><div class="line">		measureChildren(widthMeasureSpec, heightMeasureSpec);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//子类必须重写</div><div class="line">	@Override</div><div class="line">	protected void onLayout(boolean changed, int l, int t, int r, int b) &#123;</div><div class="line">		//进行布局排列</div><div class="line"></div><div class="line">		int viewGroupWidth = getMeasuredWidth(); //parent content width</div><div class="line"></div><div class="line">		int xpoint = l; //对于父view的Left位置</div><div class="line">		int yPoint = t; //对于父view的top位置</div><div class="line"></div><div class="line">		for (int i = 0; i &lt; getChildCount(); i++) &#123;</div><div class="line">			View childView = getChildAt(i);</div><div class="line">			int childWidth = childView.getMeasuredWidth();</div><div class="line">			int childHeight = childView.getMeasuredHeight();</div><div class="line">			if (xpoint + childWidth &gt; viewGroupWidth) &#123;</div><div class="line">				//进行换行</div><div class="line">				xpoint = l;</div><div class="line">				yPoint = yPoint + childHeight;  //更新相对父容器的垂直位置</div><div class="line">			&#125;</div><div class="line">			childView.layout(xpoint, yPoint, xpoint + childWidth, yPoint + childHeight);  //子类的位置由子类来实现</div><div class="line">			xpoint += childWidth; // 更新相对父容器的水平位置</div><div class="line">		&#125;</div><div class="line"></div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">  layout.xml</div><div class="line"></div><div class="line">  &lt;com.acmenxd.mvp.utils.widget.MesureViewgroup</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;</div><div class="line">    android:background=&quot;#ffffff&quot;&gt;</div><div class="line"></div><div class="line">    &lt;View</div><div class="line">        android:layout_width=&quot;100dp&quot;</div><div class="line">        android:layout_height=&quot;100dp&quot;</div><div class="line">        android:layout_margin=&quot;10dp&quot;</div><div class="line">        android:background=&quot;@android:color/black&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;View</div><div class="line">        android:layout_width=&quot;100dp&quot;</div><div class="line">        android:layout_height=&quot;100dp&quot;</div><div class="line">        android:layout_margin=&quot;10dp&quot;</div><div class="line">        android:background=&quot;@android:color/black&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;View</div><div class="line">        android:layout_width=&quot;100dp&quot;</div><div class="line">        android:layout_height=&quot;100dp&quot;</div><div class="line">        android:layout_margin=&quot;10dp&quot;</div><div class="line">        android:background=&quot;@android:color/black&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;View</div><div class="line">        android:layout_width=&quot;100dp&quot;</div><div class="line">        android:layout_height=&quot;100dp&quot;</div><div class="line">        android:layout_margin=&quot;10dp&quot;</div><div class="line">        android:background=&quot;@android:color/black&quot; /&gt;</div><div class="line"></div><div class="line">&lt;/com.acmenxd.mvp.utils.widget.MesureViewgroup&gt;</div></pre></td></tr></table></figure>
+<pre><code>看到上面的布局xml ，你会说，添加了margin为什么没有体现？因为还没有对margin 进行兼容处理
+
+下面我们来研究下如何添加margin效果
+
+ 怎么研究，总不能凭空臆想，当然需要参照，这里参照水平布局的处理
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">    /**</div><div class="line">    * Per-child layout information associated with ViewLinearLayout.</div><div class="line">    *  每个孩子与ViewLinearLayout相关的布局信息（存储子view的配置信息的内容类）</div><div class="line">    * @attr ref android.R.styleable#LinearLayout_Layout_layout_weight</div><div class="line">    * @attr ref android.R.styleable#LinearLayout_Layout_layout_gravity</div><div class="line">    */</div><div class="line">   public static class LayoutParams extends ViewGroup.MarginLayoutParams &#123;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>其实，如果要自定义ViewGroup支持子控件的layout_margin参数，则自定义的ViewGroup类必须重载
+generateLayoutParams()函数，并且在该函数中返回一个ViewGroup.MarginLayoutParams派生类对象，
+这样才能使用margin参数。
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">   @Override</div><div class="line">public LayoutParams generateLayoutParams(AttributeSet attrs) &#123;</div><div class="line">    return new MesureViewgroup.LayoutParams(getContext(), attrs);</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">// 继承自margin，支持子视图android:layout_margin属性</div><div class="line">public static class LayoutParams extends MarginLayoutParams &#123;</div><div class="line"></div><div class="line"></div><div class="line">    public LayoutParams(Context c, AttributeSet attrs) &#123;</div><div class="line">        super(c, attrs);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    public LayoutParams(int width, int height) &#123;</div><div class="line">        super(width, height);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    public LayoutParams(ViewGroup.LayoutParams source) &#123;</div><div class="line">        super(source);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    public LayoutParams(ViewGroup.MarginLayoutParams source) &#123;</div><div class="line">        super(source);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>   效果图片</p>
+<p><img src="http://img.blog.csdn.net/20170518141024674?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>####总结：</p>
+<pre><code>1.viewgroup的 onlayout（） 流程，
+2.参数代表的含义
+3.重写 generateLayoutParams（） 继承 MarginLayoutParams
+   MarginLayoutParams
+4.onmesure（）中对子类view进行mesure（）----查看onmesure（）分析篇： 链接
+</code></pre><p>demo下载地址：<a href="http://pan.baidu.com/s/1c2EKQis" target="_blank" rel="external">http://pan.baidu.com/s/1c2EKQis</a></p>
+<blockquote>
+<p>引用：<br><a href="http://www.cnblogs.com/0616--ataozhijia/p/6135794.html" target="_blank" rel="external">http://www.cnblogs.com/0616--ataozhijia/p/6135794.html</a></p>
+</blockquote>
+<h4 id="Android-ondraw-分析"><a href="#Android-ondraw-分析" class="headerlink" title="Android  ondraw( )  分析"></a>Android  ondraw( )  分析</h4><p>View 绘制的三个步骤，mesure，layout ，draw，前两种已经简单梳理了，下面是对draw的梳理。</p>
+<p>/**</p>
+<pre><code> * Manually render this view (and all of its children) to the given Canvas.
+ * The view must have already done a full layout before this function is
+ * called.  When implementing a view, implement
+ * {@link #onDraw(android.graphics.Canvas)} instead of overriding this method.
+ * If you do need to override this method, call the superclass version.
+ *
+ * @param canvas The Canvas to which the View is rendered.
+ */
+@CallSuper
+public void draw(Canvas canvas) {
+    final int privateFlags = mPrivateFlags;
+    final boolean dirtyOpaque = (privateFlags &amp; PFLAG_DIRTY_MASK) == PFLAG_DIRTY_OPAQUE &amp;&amp;
+            (mAttachInfo == null || !mAttachInfo.mIgnoreDirtyState);
+    mPrivateFlags = (privateFlags &amp; ~PFLAG_DIRTY_MASK) | PFLAG_DRAWN;
+
+    /*
+     * Draw traversal performs several drawing steps which must be executed
+     * in the appropriate order:
+     *
+     *      1. Draw the background
+     *      2. If necessary, save the canvas&apos; layers to prepare for fading
+     *      3. Draw view&apos;s content
+     *      4. Draw children
+     *      5. If necessary, draw the fading edges and restore layers
+     *      6. Draw decorations (scrollbars for instance)
+     */
+
+    // Step 1, draw the background, if needed
+    int saveCount;
+
+    if (!dirtyOpaque) {
+        drawBackground(canvas);
+    }
+
+    // skip step 2 &amp; 5 if possible (common case)
+    final int viewFlags = mViewFlags;
+    boolean horizontalEdges = (viewFlags &amp; FADING_EDGE_HORIZONTAL) != 0;
+    boolean verticalEdges = (viewFlags &amp; FADING_EDGE_VERTICAL) != 0;
+    if (!verticalEdges &amp;&amp; !horizontalEdges) {
+        // Step 3, draw the content
+        if (!dirtyOpaque) onDraw(canvas);
+
+        // Step 4, draw the children
+        dispatchDraw(canvas);
+
+        // Overlay is part of the content and draws beneath Foreground
+        if (mOverlay != null &amp;&amp; !mOverlay.isEmpty()) {
+            mOverlay.getOverlayView().dispatchDraw(canvas);
+        }
+
+        // Step 6, draw decorations (foreground, scrollbars)
+        onDrawForeground(canvas);
+
+        // we&apos;re done...
+        return;
+    }
+
+    /*
+     * Here we do the full fledged routine...
+     * (this is an uncommon case where speed matters less,
+     * this is why we repeat some of the tests that have been
+     * done above)
+     */
+
+    boolean drawTop = false;
+    boolean drawBottom = false;
+    boolean drawLeft = false;
+    boolean drawRight = false;
+
+    float topFadeStrength = 0.0f;
+    float bottomFadeStrength = 0.0f;
+    float leftFadeStrength = 0.0f;
+    float rightFadeStrength = 0.0f;
+
+    // Step 2, save the canvas&apos; layers
+     忽略
+
+    // Step 3, draw the content
+    if (!dirtyOpaque) onDraw(canvas);
+
+    // Step 4, draw the children
+    dispatchDraw(canvas);
+
+    // Step 5, draw the fade effect and restore layers
+     忽略
+    // Step 6, draw decorations (foreground, scrollbars)
+    onDrawForeground(canvas);
+}ew源码，6个步骤清晰// Step 3, draw the content
+</code></pre><p>if (!dirtyOpaque) onDraw(canvas);ondraw（）方法是子类中进行定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">// Step 4, draw the children</div><div class="line">dispatchDraw(canvas);</div><div class="line"></div><div class="line">/**</div><div class="line">     * Called by draw to draw the child views. This may be overridden</div><div class="line">     * by derived classes to gain control just before its children are drawn</div><div class="line">     * (but after its own view has been drawn).</div><div class="line">     * @param canvas the canvas on which to draw the view</div><div class="line">     */</div><div class="line">    protected void dispatchDraw(Canvas canvas) &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Viewgroup 中dispatchDraw（） 主要做 view动画处理，子view绘制工作，欲了解自行前往Viewgroup中进行源码阅读</p>
+<p>以上都执行完后就会进入到第六步，也是最后一步，这一步的作用是对视图的滚动条进行绘制。那么你可能会奇怪，当前的视图又不一定是ListView或者ScrollView，为什么要绘制滚动条呢？其实不管是Button也好，TextView也好，任何一个视图都是有滚动条的，只是一般情况下我们都没有让它显示出来而已。绘制滚动条的代码逻辑也比较复杂，这里就不再贴出来了，因为我们的重点是第三步过程。</p>
+<p>通过以上流程分析，相信大家已经知道，View是不会帮我们绘制内容部分的，因此需要每个视图根据想要展示的内容来自行绘制。<br>如果你去观察TextView、ImageView等类的源码，你会发现它们都有重写onDraw()这个方法，并且在里面执行了相当不少的绘制逻辑。<br>绘制的方式主要是借助Canvas这个类，它会作为参数传入到onDraw()方法中，供给每个视图使用。<br>Canvas这个类的用法非常丰富，基本可以把它当成一块画布，在上面绘制任意的东西。</p>
+<p> canvas + paint （画笔）=android 界面任何可见元素</p>
+<p>这里作为一个梳理 关于Canvas api，需要通过百度学习。</p>
 
       
     </div>
@@ -747,7 +899,7 @@ var jiathis_config = {data_track_clickback:'true'};
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OnMesure（）"><span class="nav-number"></span> <span class="nav-text">OnMesure（）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、源码中的measure-onMeasure方法："><span class="nav-number">1.</span> <span class="nav-text">一、源码中的measure/onMeasure方法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1、measure"><span class="nav-number">2.</span> <span class="nav-text">1、measure()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、onMeasure"><span class="nav-number">3.</span> <span class="nav-text">2、onMeasure</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、MeasureSpec"><span class="nav-number"></span> <span class="nav-text">二、MeasureSpec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Onlayout"><span class="nav-number"></span> <span class="nav-text">Onlayout( )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onDraw"><span class="nav-number"></span> <span class="nav-text">onDraw()</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OnMesure（）"><span class="nav-number"></span> <span class="nav-text">OnMesure（）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、源码中的measure-onMeasure方法："><span class="nav-number">1.</span> <span class="nav-text">一、源码中的measure/onMeasure方法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1、measure"><span class="nav-number">2.</span> <span class="nav-text">1、measure()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、onMeasure"><span class="nav-number">3.</span> <span class="nav-text">2、onMeasure</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、MeasureSpec"><span class="nav-number"></span> <span class="nav-text">二、MeasureSpec</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Onlayout"><span class="nav-number">1.</span> <span class="nav-text">1.Onlayout()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-自定义Viewgroup-派生类"><span class="nav-number">2.</span> <span class="nav-text">2.自定义Viewgroup 派生类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-重载OnMesure（）"><span class="nav-number">3.</span> <span class="nav-text">3.重载OnMesure（）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android-ondraw-分析"><span class="nav-number">4.</span> <span class="nav-text">Android  ondraw( )  分析</span></a></li></ol></div>
             
 
           </div>
