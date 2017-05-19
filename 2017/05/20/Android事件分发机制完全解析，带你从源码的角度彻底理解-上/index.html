@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="android 事件分发," />
 
 
 
@@ -90,15 +90,22 @@
 
 
 
-<meta name="description" content="生命不息，奋斗不止，万事起于忽微，量变引起质变">
-<meta property="og:type" content="website">
-<meta property="og:title" content="newbie's Home">
-<meta property="og:url" content="http://ppisland.top/index.html">
+<meta name="description" content="本文属于转载：http://blog.csdn.net/guolin_blog/article/details/9097463 源码是 2.3 的。新版源码多少会有调整。但是万变不离其宗。 其实我一直准备写一篇关于Android事件分发机制的文章，从我的第一篇博客开始，就零零散散在好多地方使用到了Android事件分发的知识。也有好多朋友问过我各种问题，比如：onTouch和onTouchEven">
+<meta name="keywords" content="android 事件分发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android事件分发机制完全解析，带你从源码的角度彻底理解(上)">
+<meta property="og:url" content="http://ppisland.top/2017/05/20/Android事件分发机制完全解析，带你从源码的角度彻底理解-上/index.html">
 <meta property="og:site_name" content="newbie's Home">
-<meta property="og:description" content="生命不息，奋斗不止，万事起于忽微，量变引起质变">
+<meta property="og:description" content="本文属于转载：http://blog.csdn.net/guolin_blog/article/details/9097463 源码是 2.3 的。新版源码多少会有调整。但是万变不离其宗。 其实我一直准备写一篇关于Android事件分发机制的文章，从我的第一篇博客开始，就零零散散在好多地方使用到了Android事件分发的知识。也有好多朋友问过我各种问题，比如：onTouch和onTouchEven">
+<meta property="og:image" content="http://img.blog.csdn.net/20170520000750853?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170520000820652?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170520000854793?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170520001146074?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-05-19T16:18:07.986Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="newbie's Home">
-<meta name="twitter:description" content="生命不息，奋斗不止，万事起于忽微，量变引起质变">
+<meta name="twitter:title" content="Android事件分发机制完全解析，带你从源码的角度彻底理解(上)">
+<meta name="twitter:description" content="本文属于转载：http://blog.csdn.net/guolin_blog/article/details/9097463 源码是 2.3 的。新版源码多少会有调整。但是万变不离其宗。 其实我一直准备写一篇关于Android事件分发机制的文章，从我的第一篇博客开始，就零零散散在好多地方使用到了Android事件分发的知识。也有好多朋友问过我各种问题，比如：onTouch和onTouchEven">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170520000750853?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -126,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://ppisland.top/"/>
+  <link rel="canonical" href="http://ppisland.top/2017/05/20/Android事件分发机制完全解析，带你从源码的角度彻底理解-上/"/>
 
 
 
 
 
-  <title>newbie's Home</title>
+  <title>Android事件分发机制完全解析，带你从源码的角度彻底理解(上) | newbie's Home</title>
   <meta name="google-site-verification" content="d-ptcMCCtKO2k9mjF8uz4PeKfGF3ZH2eFE5qLrIGaUE" />
   <meta name="baidu-site-verification" content="Kz26L6LpMH"/>
 
@@ -170,9 +177,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -323,9 +328,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -355,10 +360,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/05/20/Android事件分发机制完全解析，带你从源码的角度彻底理解-上/" itemprop="url">
-                  Android事件分发机制完全解析，带你从源码的角度彻底理解(上)
-                </a>
+                Android事件分发机制完全解析，带你从源码的角度彻底理解(上)
               
             
           </h1>
@@ -441,9 +443,7 @@
       
 
       
-        
-          
-            <p>本文属于转载：<a href="http://blog.csdn.net/guolin_blog/article/details/9097463" target="_blank" rel="external">http://blog.csdn.net/guolin_blog/article/details/9097463</a></p>
+        <p>本文属于转载：<a href="http://blog.csdn.net/guolin_blog/article/details/9097463" target="_blank" rel="external">http://blog.csdn.net/guolin_blog/article/details/9097463</a></p>
 <p>源码是 2.3 的。新版源码多少会有调整。但是万变不离其宗。</p>
 <p>其实我一直准备写一篇关于Android事件分发机制的文章，从我的第一篇博客开始，就零零散散在好多地方使用到了Android事件分发的知识。也有好多朋友问过我各种问题，比如：onTouch和onTouchEvent有什么区别，又该如何使用？为什么给ListView引入了一个滑动菜单的功能，ListView就不能滚动了？为什么图片轮播器里的图片使用Button而不用ImageView？等等……对于这些问题，我并没有给出非常详细的回答，因为我知道如果想要彻底搞明白这些问题，掌握Android事件分发机制是必不可少的，而Android事件分发机制绝对不是三言两语就能说得清的。</p>
 <p>在我经过较长时间的筹备之后，终于决定开始写这样一篇文章了。目前虽然网上相关的文章也不少，但我觉得没有哪篇写得特别详细的(也许我还没有找到)，多数文章只是讲了讲理论，然后配合demo运行了一下结果。而我准备带着大家从源码的角度进行分析，相信大家可以更加深刻地理解Android事件分发机制。</p>
@@ -491,366 +491,105 @@
 <p>另外需要注意的是，onTouch能够得到执行需要两个前提条件，第一mOnTouchListener的值不能为空，第二当前点击的控件必须是enable的。因此如果你有一个控件是非enable的，那么给它注册onTouch事件将永远得不到执行。对于这一类控件，如果我们想要监听它的touch事件，就必须通过在该控件中重写onTouchEvent方法来实现。</p>
 <h4 id="2-为什么给ListView引入了一个滑动菜单的功能，ListView就不能滚动了？"><a href="#2-为什么给ListView引入了一个滑动菜单的功能，ListView就不能滚动了？" class="headerlink" title="2. 为什么给ListView引入了一个滑动菜单的功能，ListView就不能滚动了？"></a>2. 为什么给ListView引入了一个滑动菜单的功能，ListView就不能滚动了？</h4><p>如果你阅读了Android实现图片滚动控件，含页签功能，让你的应用像淘宝一样炫起来 这篇文章。当时我在图片轮播器里使用Button，主要就是因为Button是可点击的，而ImageView是不可点击的。如果想要使用ImageView，可以有两种改法。第一，在ImageView的onTouch方法里返回true，这样可以保证ACTION_DOWN之后的其它action都能得到执行，才能实现图片滚动的效果。第二，在布局文件里面给ImageView增加一个android:clickable=”true”的属性，这样ImageView变成可点击的之后，即使在onTouch里返回了false，ACTION_DOWN之后的其它action也是可以得到执行的。</p>
 
-          
-        
       
     </div>
 
     <div>
       
+        
+
+      
     </div>
 
     <div>
       
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://ppisland.top/2017/05/17/Android-View-绘制原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="newbie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="newbie's Home">
-    </span>
-
-    
-      <header class="post-header">
-
         
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/05/17/Android-View-绘制原理/" itemprop="url">
-                  Android View 绘制原理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T23:54:35+08:00">
-                2017-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android-底层架构/" itemprop="url" rel="index">
-                    <span itemprop="name">android 底层架构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/05/17/Android-View-绘制原理/" class="leancloud_visitors" data-flag-title="Android View 绘制原理">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>生活不止眼前的苟且，还有诗和远方。</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/weixin.png" alt="newbie WeChat Pay"/>
+          <p>微信打赏</p>
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
       
       
+    </div>
+  </div>
 
+
+      
+    </div>
+
+    <div>
       
         
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>  高楼万丈平地起，没有基础何来上层建筑，这篇blog就是一个对View 绘制流程的一个梳理。当然不免回引用高手只言片语。</p>
-<p>View 绘制原理的三个关键步骤:</p>
-<p>提起view绘制原理不免会将View,Viewgroup 区别开来，有兴趣可以看下View层级结构，这样可以更加深入理解View</p>
-<h3 id="OnMesure（）"><a href="#OnMesure（）" class="headerlink" title="OnMesure（）"></a>OnMesure（）</h3><h4 id="一、源码中的measure-onMeasure方法："><a href="#一、源码中的measure-onMeasure方法：" class="headerlink" title="一、源码中的measure/onMeasure方法："></a>一、源码中的measure/onMeasure方法：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;  </div><div class="line">    setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),  </div><div class="line">            getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/17/Android-View-绘制原理/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://ppisland.top/2017/05/14/为-Hexo-NexT-添加-L第三方-iveRe-（来必力）评论功能/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="newbie">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="newbie's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/05/14/为-Hexo-NexT-添加-L第三方-iveRe-（来必力）评论功能/" itemprop="url">
-                  为-Hexo-NexT-添加-第三方- LiveRe（来必力）评论功能
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-14T23:16:18+08:00">
-                2017-05-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/programming/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/android-事件分发/" rel="tag"># android 事件分发</a>
           
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/05/14/为-Hexo-NexT-添加-L第三方-iveRe-（来必力）评论功能/" class="leancloud_visitors" data-flag-title="为-Hexo-NexT-添加-第三方- LiveRe（来必力）评论功能">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
         
-          <p>Hexo 博客主题中，NexT 是一个比较简洁，大方的主题，正如其官方描述【精于心，简于形】。并且有三种外观、多语言、多套代码高亮主题等，还支持一些自定义扩展，使用和配置起来也是相当方便。</p>
-<p>社会化评论插件，之前用的是 Disqus，但是对于国内用户来说，经常性的加载不出来，改用多说，最近也要停止维护，改用友言，不知道怎么回事，前几天还好好的，最近就加载不出来了，折腾了几次，终于找到了满意的，虽然不是国内的，速度还能接受。</p>
-<h4 id="注册-LiveRe"><a href="#注册-LiveRe" class="headerlink" title="注册 LiveRe"></a>注册 LiveRe</h4><p>进入 <a href="https://livere.com/">LiveRe</a>，注册账号。</p>
-<p>LiveRe 有两个版本：<br><img src="http://img.blog.csdn.net/20170514230927429?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>City 版：是一款适合所有人使用的免费版本；<br>Premium 版：是一款能够帮助企业实现自动化管理的多功能收费版本。<br>我们 <strong>City</strong> 版就够了。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/14/为-Hexo-NexT-添加-L第三方-iveRe-（来必力）评论功能/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/17/Android-View-绘制原理/" rel="prev" title="Android View 绘制原理">
+                Android View 绘制原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+	<span class="jiathis_txt">share to</span>
+	<a class="jiathis_button_tools_1"></a>
+	<a class="jiathis_button_tools_2"></a>
+	<a class="jiathis_button_tools_3"></a>
+	<a class="jiathis_button_tools_4"></a>
+	<a href="http://www.jiathis.com/share?uid=2131772" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">more</a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2131772" charset="utf-8"></script>
+<!-- JiaThis Button END -->
 
+      
+    </div>
+  </div>
 
 
           </div>
@@ -858,6 +597,31 @@
 
 
           
+  <div class="comments" id="comments">
+
+
+<!-- ������City�氲װ���� -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yODY1NC81MjI1">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> Ϊ����ʹ�����������۹����뼤��JavaScript</noscript>
+</div>
+<!-- City�氲װ���������� -->
+
+    
+  </div>
+
         </div>
         
           
@@ -876,8 +640,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -968,6 +741,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-onTouch和onTouchEvent有什么区别，又该如何使用？"><span class="nav-number">1.</span> <span class="nav-text">1. onTouch和onTouchEvent有什么区别，又该如何使用？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-为什么给ListView引入了一个滑动菜单的功能，ListView就不能滚动了？"><span class="nav-number">2.</span> <span class="nav-text">2. 为什么给ListView引入了一个滑动菜单的功能，ListView就不能滚动了？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1092,6 +881,11 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
 
   
 
