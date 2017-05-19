@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20170520000820652?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170520000854793?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170520001146074?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-05-19T16:18:07.986Z">
+<meta property="og:updated_time" content="2017-05-19T16:19:58.579Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android事件分发机制完全解析，带你从源码的角度彻底理解(上)">
 <meta name="twitter:description" content="本文属于转载：http://blog.csdn.net/guolin_blog/article/details/9097463 源码是 2.3 的。新版源码多少会有调整。但是万变不离其宗。 其实我一直准备写一篇关于Android事件分发机制的文章，从我的第一篇博客开始，就零零散散在好多地方使用到了Android事件分发的知识。也有好多朋友问过我各种问题，比如：onTouch和onTouchEven">
@@ -452,6 +452,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">button.setOnClickListener(new OnClickListener() &#123;  </div><div class="line">    @Override  </div><div class="line">    public void onClick(View v) &#123;  </div><div class="line">        Log.d(&quot;TAG&quot;, &quot;onClick execute&quot;);  </div><div class="line">    &#125;  </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>这样在onClick方法里面写实现，就可以在按钮被点击的时候执行。你可能也已经知道，如果想给这个按钮再添加一个touch事件，只需要调用：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">button.setOnTouchListener(new OnTouchListener() &#123;  </div><div class="line">    @Override  </div><div class="line">    public boolean onTouch(View v, MotionEvent event) &#123;  </div><div class="line">        Log.d(&quot;TAG&quot;, &quot;onTouch execute, action &quot; + event.getAction());  </div><div class="line">        return false;  </div><div class="line">    &#125;  </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>onTouch方法里能做的事情比onClick要多一些，比如判断手指按下、抬起、移动等事件。那么如果我两个事件都注册了，哪一个会先执行呢？我们来试一下就知道了，运行程序点击按钮，打印结果如下：</p>
 <p><img src="http://img.blog.csdn.net/20170520000750853?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
 <p>可以看到，onTouch是优先于onClick执行的，并且onTouch执行了两次，一次是ACTION_DOWN，一次是ACTION_UP(你还可能会有多次ACTION_MOVE的执行，如果你手抖了一下)。因此事件传递的顺序是先经过onTouch，再传递到onClick。</p>
