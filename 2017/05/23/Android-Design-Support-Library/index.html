@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="plups," />
+  <meta name="keywords" content="android," />
 
 
 
@@ -90,21 +90,24 @@
 
 
 
-<meta name="description" content="Hexo 博客主题中，NexT 是一个比较简洁，大方的主题，正如其官方描述【精于心，简于形】。并且有三种外观、多语言、多套代码高亮主题等，还支持一些自定义扩展，使用和配置起来也是相当方便。 社会化评论插件，之前用的是 Disqus，但是对于国内用户来说，经常性的加载不出来，改用多说，最近也要停止维护，改用友言，不知道怎么回事，前几天还好好的，最近就加载不出来了，折腾了几次，终于找到了满意的，虽然不">
-<meta name="keywords" content="plups">
+<meta name="description" content="前言  前几天学习嵌套布局，为了加深理解，找了一些例子，正好5.0 MD 中有，拿来对比理解。 配合使用AppBarLayout,CoordinatorLayout,NestedScrollView 先看布局嵌套层次  重点介绍AppBarLayout appBarLayout 继承自LinearLayout，子控件默认为竖直方向显示，可以用它实现Material Design 的Toolbar；">
+<meta name="keywords" content="android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="为-Hexo-NexT-添加-第三方- LiveRe（来必力）评论功能">
-<meta property="og:url" content="http://ppisland.top/2017/05/14/为-Hexo-NexT-添加-L第三方-iveRe-（来必力）评论功能/index.html">
+<meta property="og:title" content="Android Design Support Library">
+<meta property="og:url" content="http://ppisland.top/2017/05/23/Android-Design-Support-Library/index.html">
 <meta property="og:site_name" content="newbie's Home">
-<meta property="og:description" content="Hexo 博客主题中，NexT 是一个比较简洁，大方的主题，正如其官方描述【精于心，简于形】。并且有三种外观、多语言、多套代码高亮主题等，还支持一些自定义扩展，使用和配置起来也是相当方便。 社会化评论插件，之前用的是 Disqus，但是对于国内用户来说，经常性的加载不出来，改用多说，最近也要停止维护，改用友言，不知道怎么回事，前几天还好好的，最近就加载不出来了，折腾了几次，终于找到了满意的，虽然不">
-<meta property="og:image" content="http://img.blog.csdn.net/20170514230927429?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20170514231028982?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20170514231209952?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-05-14T15:21:40.643Z">
+<meta property="og:description" content="前言  前几天学习嵌套布局，为了加深理解，找了一些例子，正好5.0 MD 中有，拿来对比理解。 配合使用AppBarLayout,CoordinatorLayout,NestedScrollView 先看布局嵌套层次  重点介绍AppBarLayout appBarLayout 继承自LinearLayout，子控件默认为竖直方向显示，可以用它实现Material Design 的Toolbar；">
+<meta property="og:image" content="http://img.blog.csdn.net/20170523175452036?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170523175559005?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://7xrxe7.com1.z0.glb.clouddn.com/AppBarLayout-1">
+<meta property="og:image" content="http://7xrxe7.com1.z0.glb.clouddn.com/AppBarLayout-2">
+<meta property="og:image" content="http://7xrxe7.com1.z0.glb.clouddn.com/AppbarLayout-3">
+<meta property="og:image" content="http://7xrxe7.com1.z0.glb.clouddn.com/AppBarLayout-4">
+<meta property="og:updated_time" content="2017-05-23T14:26:30.624Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="为-Hexo-NexT-添加-第三方- LiveRe（来必力）评论功能">
-<meta name="twitter:description" content="Hexo 博客主题中，NexT 是一个比较简洁，大方的主题，正如其官方描述【精于心，简于形】。并且有三种外观、多语言、多套代码高亮主题等，还支持一些自定义扩展，使用和配置起来也是相当方便。 社会化评论插件，之前用的是 Disqus，但是对于国内用户来说，经常性的加载不出来，改用多说，最近也要停止维护，改用友言，不知道怎么回事，前几天还好好的，最近就加载不出来了，折腾了几次，终于找到了满意的，虽然不">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20170514230927429?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:title" content="Android Design Support Library">
+<meta name="twitter:description" content="前言  前几天学习嵌套布局，为了加深理解，找了一些例子，正好5.0 MD 中有，拿来对比理解。 配合使用AppBarLayout,CoordinatorLayout,NestedScrollView 先看布局嵌套层次  重点介绍AppBarLayout appBarLayout 继承自LinearLayout，子控件默认为竖直方向显示，可以用它实现Material Design 的Toolbar；">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170523175452036?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -132,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://ppisland.top/2017/05/14/为-Hexo-NexT-添加-L第三方-iveRe-（来必力）评论功能/"/>
+  <link rel="canonical" href="http://ppisland.top/2017/05/23/Android-Design-Support-Library/"/>
 
 
 
 
 
-  <title>为-Hexo-NexT-添加-第三方- LiveRe（来必力）评论功能 | newbie's Home</title>
+  <title>Android Design Support Library | newbie's Home</title>
   <meta name="google-site-verification" content="d-ptcMCCtKO2k9mjF8uz4PeKfGF3ZH2eFE5qLrIGaUE" />
   <meta name="baidu-site-verification" content="Kz26L6LpMH"/>
 
@@ -338,7 +341,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://ppisland.top/2017/05/14/为-Hexo-NexT-添加-L第三方-iveRe-（来必力）评论功能/">
+    <link itemprop="mainEntityOfPage" href="http://ppisland.top/2017/05/23/Android-Design-Support-Library/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="newbie">
@@ -359,7 +362,7 @@
             
             
               
-                为-Hexo-NexT-添加-第三方- LiveRe（来必力）评论功能
+                Android Design Support Library
               
             
           </h2>
@@ -374,8 +377,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-14T23:16:18+08:00">
-                2017-05-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T22:20:34+08:00">
+                2017-05-23
               </time>
             
 
@@ -397,8 +400,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/programming/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
                   </a>
                 </span>
 
@@ -414,7 +417,7 @@
 
           
           
-             <span id="/2017/05/14/为-Hexo-NexT-添加-L第三方-iveRe-（来必力）评论功能/" class="leancloud_visitors" data-flag-title="为-Hexo-NexT-添加-第三方- LiveRe（来必力）评论功能">
+             <span id="/2017/05/23/Android-Design-Support-Library/" class="leancloud_visitors" data-flag-title="Android Design Support Library">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -442,35 +445,27 @@
       
 
       
-        <p>Hexo 博客主题中，NexT 是一个比较简洁，大方的主题，正如其官方描述【精于心，简于形】。并且有三种外观、多语言、多套代码高亮主题等，还支持一些自定义扩展，使用和配置起来也是相当方便。</p>
-<p>社会化评论插件，之前用的是 Disqus，但是对于国内用户来说，经常性的加载不出来，改用多说，最近也要停止维护，改用友言，不知道怎么回事，前几天还好好的，最近就加载不出来了，折腾了几次，终于找到了满意的，虽然不是国内的，速度还能接受。</p>
-<h4 id="注册-LiveRe"><a href="#注册-LiveRe" class="headerlink" title="注册 LiveRe"></a>注册 LiveRe</h4><p>进入 <a href="https://livere.com/" target="_blank" rel="external">LiveRe</a>，注册账号。</p>
-<p>LiveRe 有两个版本：<br><img src="http://img.blog.csdn.net/20170514230927429?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>City 版：是一款适合所有人使用的免费版本；<br>Premium 版：是一款能够帮助企业实现自动化管理的多功能收费版本。<br>我们 <strong>City</strong> 版就够了。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  前几天学习嵌套布局，为了加深理解，找了一些例子，正好5.0 MD 中有，拿来对比理解。<br> 配合使用AppBarLayout,CoordinatorLayout,NestedScrollView</p>
+<p>先看布局嵌套层次</p>
+<p><img src="http://img.blog.csdn.net/20170523175452036?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h4 id="重点介绍"><a href="#重点介绍" class="headerlink" title="重点介绍"></a>重点介绍</h4><p>AppBarLayout</p>
+<p>appBarLayout 继承自LinearLayout，子控件默认为竖直方向显示，可以用它实现Material Design 的Toolbar；它支持滑动手势；它的子控件可以通过在代码里调用setScrollFlags(int)或者在XML里app:layout_scrollFlags来设置它的滑动手势。当然实现这些的前提是它的根布局必须是CoordinatorLayout。</p>
+<p> 必须是CoordinatorLayout吗？–  <a href="ppisland.top">查看嵌套布局分析</a>  (<a href="http://ppisland.top">http://ppisland.top</a>)</p>
+<p>AppBarLayout既然为LinearLayout 子类，嵌套子view当然不仅仅只有Toolbar<br>下面我们具体来看看它的使用方法，我们先看以下的布局：</p>
 <a id="more"></a>
-<p>安装，获取 uid：</p>
-<p><img src="http://img.blog.csdn.net/20170514231028982?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>填写完成后，进入到 管理页面 -&gt; 代码管理 -&gt; 一般网站 代码中，data-uid 即为所需 uid。</p>
-<p>添加 LiveRe 插件</p>
-<p>###　第一步</p>
-<p>首先在 _config.yml 文件中添加如下配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># Support for LiveRe comments system.</div><div class="line"># You can get your uid from https://livere.com/insight/myCode (General web site)</div><div class="line">livere_uid: your uid</div></pre></td></tr></table></figure>
-<p>其中 livere_uid 即上一步获取到的 uid。</p>
-<h3 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h3><p>在 layout/_scripts/third-party/comments/ 目录中添加 livere.swig，文件内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;% if not (theme.duoshuo and theme.duoshuo.shortname) and not theme.duoshuo_shortname and not theme.disqus_shortname and not theme.hypercomments_id and not theme.gentie_productKey %&#125;</div><div class="line">  &#123;% if theme.livere_uid %&#125;</div><div class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">      (function(d, s) &#123;</div><div class="line">        var j, e = d.getElementsByTagName(s)[0];</div><div class="line">        if (typeof LivereTower === &apos;function&apos;) &#123; return; &#125;</div><div class="line">        j = d.createElement(s);</div><div class="line">        j.src = &apos;https://cdn-city.livere.com/js/embed.dist.js&apos;;</div><div class="line">        j.async = true;</div><div class="line">        e.parentNode.insertBefore(j, e);</div><div class="line">      &#125;)(document, &apos;script&apos;);</div><div class="line">    &lt;/script&gt;</div><div class="line">  &#123;% endif %&#125;</div><div class="line">&#123;% endif %&#125;</div></pre></td></tr></table></figure>
-<p>优先使用其他评论插件，如果其他评论插件没有开启，且 LiveRe 评论插件配置开启了，则使用 LiveRe。其中脚本代码为上一步管理页面中获取到的。</p>
-<h3 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h3><p>在 layout/_scripts/third-party/comments.swig 文件中追加：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;% include &apos;./comments/livere.swig&apos; %&#125;</div></pre></td></tr></table></figure>
-<p>引入 LiveRe 评论插件。</p>
-<h3 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h3><p>最后，在 layout/_partials/comments.swig 文件中条件最后追加 LiveRe 插件是否引用的判断逻辑：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% elseif theme.livere_uid %&#125;</div><div class="line">      &lt;div id=&quot;lv-container&quot; data-id=&quot;city&quot; data-uid=&quot;&#123;&#123; theme.livere_uid &#125;&#125;&quot;&gt;&lt;/div&gt;</div><div class="line">&#123;% endif %&#125;</div></pre></td></tr></table></figure>
-<p>其中 data-uid 属性的值即在主题配置文件中配置的 theme.livere_uid 的值。</p>
-<p>当然还有一个暴力方式，就是直接复制评论框代码到comments.swig中进行粘贴</p>
-<p>至此，为 NexT 主题添加 LiveRe 评论插件完成。</p>
-<p><img src="http://img.blog.csdn.net/20170514231209952?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>接下来就可以和小伙伴一起愉快的评论了</p>
-<p>引用： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;android.support.design.widget.CoordinatorLayout</div><div class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line"></div><div class="line">    &lt;android.support.design.widget.AppBarLayout</div><div class="line">        android:id=&quot;@+id/appbar_layout&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;wrap_content&quot;&gt;</div><div class="line"></div><div class="line">        &lt;android.support.v7.widget.Toolbar</div><div class="line">		android:id=&quot;@+id/toolbar&quot;</div><div class="line">		android:layout_width=&quot;match_parent&quot;</div><div class="line">		android:layout_height=&quot;wrap_content&quot;</div><div class="line">		android:background=&quot;?attr/colorPrimary&quot;</div><div class="line">		app:title=&quot;标题&quot;</div><div class="line">		app:layout_scrollFlags=&quot;scroll|enterAlways&quot;/&gt;</div><div class="line">    &lt;/android.support.design.widget.AppBarLayout&gt;</div><div class="line"></div><div class="line">    &lt;android.support.v4.widget.NestedScrollView</div><div class="line">        android:id=&quot;@+id/nested_scrollview&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;</div><div class="line">        app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;</div><div class="line">        &gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">		android:layout_width=&quot;match_parent&quot;</div><div class="line">		android:layout_height=&quot;match_parent&quot;</div><div class="line">		android:text=&quot;@string/text&quot;/&gt;</div><div class="line">    &lt;/&lt;android.support.v4.widget.NestedScrollView&gt;</div><div class="line">&lt;/android.support.design.widget.CoordinatorLayout&gt;</div></pre></td></tr></table></figure>
+<p>增加 ImageView 效果更明显</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;android.support.design.widget.CoordinatorLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line"></div><div class="line">    &lt;android.support.design.widget.AppBarLayout</div><div class="line">        android:id=&quot;@+id/appbar_layout&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;wrap_content&quot;&gt;</div><div class="line"></div><div class="line">        &lt;android.support.v7.widget.Toolbar</div><div class="line">            android:id=&quot;@+id/toolbar&quot;</div><div class="line">            android:layout_width=&quot;match_parent&quot;</div><div class="line">            android:layout_height=&quot;wrap_content&quot;</div><div class="line">            android:background=&quot;?attr/colorPrimary&quot;</div><div class="line">            app:layout_scrollFlags=&quot;scroll|exitUntilCollapsed&quot;</div><div class="line">            app:title=&quot;标题&quot; /&gt;</div><div class="line"></div><div class="line">        &lt;ImageView</div><div class="line">            android:layout_width=&quot;match_parent&quot;</div><div class="line">            android:layout_height=&quot;200dp&quot;</div><div class="line">            android:background=&quot;@mipmap/demo&quot;</div><div class="line">            android:minHeight=&quot;?android:attr/actionBarSize&quot;</div><div class="line">            app:layout_scrollFlags=&quot;scroll|exitUntilCollapsed&quot; /&gt;</div><div class="line">    &lt;/android.support.design.widget.AppBarLayout&gt;</div><div class="line"></div><div class="line">    &lt;android.support.v4.widget.NestedScrollView</div><div class="line">        android:id=&quot;@+id/nested_scrollview&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;</div><div class="line">        app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:layout_width=&quot;match_parent&quot;</div><div class="line">            android:layout_height=&quot;match_parent&quot;</div><div class="line">            android:text=&quot;@string/text&quot; /&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;/android.support.v4.widget.NestedScrollView&gt;</div><div class="line">&lt;/android.support.design.widget.CoordinatorLayout&gt;</div></pre></td></tr></table></figure>
+<p>Flag 设置 会呈现不同的效果<br><img src="http://img.blog.csdn.net/20170523175559005?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbzI3OTY0MjcwNw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>下面我们就看一下Scroll Flag 都包含哪些：</p>
+<p><strong>scroll</strong>：设置这个flag之后 Toolbar会滚出屏幕外部，如果不设置这个Toolbar 会固定在顶部不动。</p>
+<p><strong>enterAlways</strong>：这个flag跟scroll一块使用时，向上滑动时ToolBar移出屏幕，我们向下滑动时Toolbar进入屏幕。<br><strong>enterAlwaysCollapsed</strong>：enterAlways的附加值。这里涉及到Child View的高度和最小高度，向下滚动时，Child View先向下滚动最小高度值，然后Scrolling View开始滚动，到达边界时，Child View再向下滚动，直至显示完全。<br><strong>exitUntilCollapsed</strong>：这个跟上面的enterAlwaysCollapsed相反；它也涉及到minHeight，当发生向上滚动事件时，AppLayout向上滚动，直到我们设置的minHeight。<br><strong>Snap</strong>：与scroll一起使用时，当滑动距离超过阀值，AppBarLayout就会随着滑动的View方向滑动，知道展示/隐藏 子view。</p>
+<p>引用效果图：</p>
+<p><img src="http://7xrxe7.com1.z0.glb.clouddn.com/AppBarLayout-1" alt="效果一"> <img src="http://7xrxe7.com1.z0.glb.clouddn.com/AppBarLayout-2" alt="效果2"><img src="http://7xrxe7.com1.z0.glb.clouddn.com/AppbarLayout-3" alt="效果三"><img src="http://7xrxe7.com1.z0.glb.clouddn.com/AppBarLayout-4" alt="效果4"></p>
+<h3 id="DEMO-下载地址：-http-pan-baidu-com-s-1slGw2p3"><a href="#DEMO-下载地址：-http-pan-baidu-com-s-1slGw2p3" class="headerlink" title="DEMO 下载地址： http://pan.baidu.com/s/1slGw2p3"></a>DEMO 下载地址： <a href="http://pan.baidu.com/s/1slGw2p3" target="_blank" rel="external">http://pan.baidu.com/s/1slGw2p3</a></h3><hr>
+<p>引用</p>
 <blockquote>
-<p>添加LiveRe<br>  <a href="https://blog.smoker.cc/web/add-comments-livere-for-hexo-theme-next.html" target="_blank" rel="external">https://blog.smoker.cc/web/add-comments-livere-for-hexo-theme-next.html</a></p>
+<p>AppBarLayout 介绍和简单使用 <a href="http://blog.csdn.net/litengit/article/details/52948574" target="_blank" rel="external">http://blog.csdn.net/litengit/article/details/52948574</a></p>
 </blockquote>
 
       
@@ -517,7 +512,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/plups/" rel="tag"># plups</a>
+            <a href="/tags/android/" rel="tag"># android</a>
           
         </div>
       
@@ -530,18 +525,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/17/Android-View-绘制原理/" rel="next" title="Android View 绘制原理">
-                <i class="fa fa-chevron-left"></i> Android View 绘制原理
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/11/Hierarchy-Viewer使用详解/" rel="prev" title="Hierarchy Viewer使用详解">
-                Hierarchy Viewer使用详解 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/20/Android事件分发机制完全解析，带你从源码的角度彻底理解-下/" rel="prev" title="Android事件分发机制完全解析，带你从源码的角度彻底理解(下)">
+                Android事件分发机制完全解析，带你从源码的角度彻底理解(下) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -737,7 +728,7 @@ var jiathis_config = {data_track_clickback:'true'};
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#注册-LiveRe"><span class="nav-number">1.</span> <span class="nav-text">注册 LiveRe</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步"><span class="nav-number"></span> <span class="nav-text">第二步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步"><span class="nav-number"></span> <span class="nav-text">第三步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四步"><span class="nav-number"></span> <span class="nav-text">第四步</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重点介绍"><span class="nav-number">1.1.</span> <span class="nav-text">重点介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DEMO-下载地址：-http-pan-baidu-com-s-1slGw2p3"><span class="nav-number">2.</span> <span class="nav-text">DEMO 下载地址： http://pan.baidu.com/s/1slGw2p3</span></a></li></ol></div>
             
 
           </div>
